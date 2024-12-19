@@ -1,0 +1,10 @@
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[user]
+	name = Zedro 
+	email = 45104292+PedroZappa@users.noreply.github.com 
+[core]
+	editor = vim
+[diff]
+	submodule = log
