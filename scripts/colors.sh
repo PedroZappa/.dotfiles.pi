@@ -1,4 +1,4 @@
-#!/ausr/bin/env bash
+#!/usr/bin/env bash
 # Color Codes
 # Run the following command to get list of available colors
 # bash -c 'for c in {0..255}; do tput setaf $c; tput setaf $c | cat -v; echo =$c; done'
