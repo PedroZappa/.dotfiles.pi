@@ -22,6 +22,8 @@ alias glgg='git log --graph --oneline --decorate'
 alias glgs='git log --graph --oneline --decorate | head -n 7'
 alias gm='git merge --stat --log'
 
+alias svim='sudo vim -u ~/.vimrc' 
+
 # ls || eza
 if command -v eza > /dev/null 2>&1; then
 	echo "[Running ${GREEN}eza${NC}! 📊]"
