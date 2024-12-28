@@ -28,6 +28,8 @@ export PATH="$HOME/.local/bin:$PATH"
 # export PATH="$HOME/sgoinfre/homebrew/bin:$PATH"
 # Add ~/.dotfiles/scripts to PATH
 export PATH="$SCRIPTS:$PATH"
+# Add snap to PATH
+export PATH=$PATH:/snap/bin
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
