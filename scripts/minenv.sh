@@ -7,6 +7,47 @@
 # Load Colors
 source ./colors.sh
 
+# Associative array defining the installation tasks and their respective packages
+declare -A PACKAGES
+PACKAGES=(
+    ["essential_tools"]="build-essential cmake g++ make git tmux curl wget vim vim-gtk3 pkg-config clang valgrind gdb python3-pip libtool autoconf automake libssl-dev libboost-all-dev"
+    ["audio_dsp_libraries"]="jack_transport_link rnbo-runner-panel libsndfile1-dev libjack-jackd2-dev portaudio19-dev libfftw3-dev libasound2-dev libsdl2-dev libpulse-dev"
+    ["osc_libraries"]="libboost-system-dev libboost-filesystem-dev libboost-program-options-dev libzmq3-dev"
+    ["additional_tools"]="zsh htop tree ripgrep ncdu fzf"
+    # ["python_libraries"]="numpy scipy soundfile pyserial"
+)
+
+# Function to install packages
+install_packages() {
+    local category=$1
+    local packages=$2
+
+    echo "Installing $category..."
+    sudo apt install -y $packages
+}
+
+# Update package lists
+echo "Updating package lists..."
+sudo apt update
+
+# Upgrade installed packages to the latest version
+echo "Upgrading installed packages..."
+sudo apt upgrade -y
+
+# Install packages from the associative array
+for category in "${!PACKAGES[@]}"; do
+    install_packages "$category" "${PACKAGES[$category]}"
+done
+
+# Clean up to save space
+echo "Cleaning up..."
+sudo apt autoremove -y
+sudo apt clean
+
+# Install Python libraries using pip
+# echo "Installing Python libraries..."
+# pip3 install --user ${PACKAGES["python_libraries"]}
+
 # Associative array defining source and target FILES
 declare -A FILES
 FILES=(
@@ -40,6 +81,6 @@ create_symlink() {
 }
 
 for SRC in "${!FILES[@]}"; do
-    DEST=${FILES[@]}
+    DEST=${FILES[$SRC]}
     create_symlink "$SRC" "$DEST"
 done
