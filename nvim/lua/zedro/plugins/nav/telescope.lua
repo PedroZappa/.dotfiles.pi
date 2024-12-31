@@ -170,9 +170,9 @@ EOF
 
     pcall(require("telescope").load_extension("emoji"))
     pcall(require("telescope").load_extension("repo"))
-    pcall(require('telescope').load_extension('fzf'))
+    --pcall(require('telescope').load_extension('fzf'))
     pcall(require("telescope").load_extension("live_grep_args"))
-    pcall(require('telescope').load_extension('dap'))
+    --pcall(require('telescope').load_extension('dap'))
     pcall(require('telescope').load_extension('ports'))
     pcall(require('telescope').load_extension('telescope-yaml'))
 
@@ -234,11 +234,11 @@ EOF
     vim.keymap.set('n', '<leader>ws', builtin.lsp_dynamic_workspace_symbols, { desc = "[W]orkspace [S]ymbols" })
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = "[R]e[n]ame variable" })
     -- DAP bindings
-    vim.keymap.set('n', '<leader>dc', telescope.extensions.dap.commands, { desc = "[D]AP : [c]ommands" })
-    vim.keymap.set('n', '<leader>dC', telescope.extensions.dap.configurations, { desc = "[D]AP : [C]onfigurations" })
-    vim.keymap.set('n', '<leader>db', telescope.extensions.dap.list_breakpoints, { desc = "[D]AP : List [B]reakpoints" })
-    vim.keymap.set('n', '<leader>dv', telescope.extensions.dap.variables, { desc = "[D]AP : [V]ariables" })
-    vim.keymap.set('n', '<leader>df', telescope.extensions.dap.frames, { desc = "[D]AP : [F]rames" })
+    --vim.keymap.set('n', '<leader>dc', telescope.extensions.dap.commands, { desc = "[D]AP : [c]ommands" })
+    --vim.keymap.set('n', '<leader>dC', telescope.extensions.dap.configurations, { desc = "[D]AP : [C]onfigurations" })
+    --vim.keymap.set('n', '<leader>db', telescope.extensions.dap.list_breakpoints, { desc = "[D]AP : List [B]reakpoints" })
+    --vim.keymap.set('n', '<leader>dv', telescope.extensions.dap.variables, { desc = "[D]AP : [V]ariables" })
+    --vim.keymap.set('n', '<leader>df', telescope.extensions.dap.frames, { desc = "[D]AP : [F]rames" })
     -- Search grepped text
     vim.keymap.set({ 'n', 'v' }, '<leader>sg', changeText(lga), { desc = '[S]earch by [G]rep' })
     vim.keymap.set({ 'n', 'v' }, '<C-g>', changeText(lga), { desc = '[S]earch by [G]rep' })

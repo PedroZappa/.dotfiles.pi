@@ -57,7 +57,7 @@ return {
 
     mason_tool_installer.setup({
       ensure_installed = {
-        "prettier", -- prettier formatter
+        -- "prettier", -- prettier formatter
         "stylua",   -- lua formatter
         -- "eslint_d", -- js linter
         -- "black",    -- python formatter
@@ -69,7 +69,7 @@ return {
 
     mason_lspconfig.setup({
       ensure_installed = {
-        "clangd",
+        -- "clangd",
         "lua_ls",
         -- "jsonls",                    -- json
         -- "html",                      -- html
