@@ -1,9 +1,21 @@
-# Created by Zap installer
+##########################
+### Zap Plugin Manager ###
+##########################
+
 [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ] && source "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh"
 plug "zsh-users/zsh-autosuggestions"
 plug "zap-zsh/supercharge"
-plug "zap-zsh/zap-prompt"
 plug "zsh-users/zsh-syntax-highlighting"
+plug "hlissner/zsh-autopair"
+plug "zsh-users/zsh-history-substring-search"
+plug "MichaelAquilina/zsh-you-should-use"
+plug "zap-zsh/completions"
+plug "zap-zsh/sudo"
+plug "web-search"
+plug "zap-zsh/fzf"
+plug "zap-zsh/web-search"
+plug "jeffreytse/zsh-vi-mode"
+plug "zap-zsh/zap-prompt"
 
 # Load and initialise completion system
 autoload -Uz compinit
@@ -24,6 +36,11 @@ alias gm='git merge --stat --log'
 
 alias svim='sudo vim -u ~/.vimrc' 
 
+# Neovim
+alias v='nvim'
+alias vc='vim | lolcat'
+alias clear_nvim='rm -rf ~/.local/share/nvim'
+
 # ls || eza
 if command -v eza > /dev/null 2>&1; then
 	echo "[Running ${GREEN}eza${NC}! 📊]"
@@ -35,3 +52,15 @@ else
 	echo "[Running ${YELLOW}ls${NC}! ]"
 	alias ll='ls -al --color'
 fi
+
+############################
+### Load Starship Prompt ###
+############################
+
+#if command -v starship > /dev/null 2>&1; then
+#    eval "$(starship init zsh)"
+#else
+#    ZSH_THEME="refined"
+#fi
+
+ZSH_THEME="refined"
