@@ -7,14 +7,21 @@
 # Load Colors
 source ./colors.sh
 
-# Associative array defining the installation tasks and their respective packages
+# Define package categories in separate variables for better maintainability
+core_tools="build-essential cmake g++ make git tmux curl wget vim vim-gtk3 pkg-config clang valgrind gdb python3-pip libtool autoconf automake libssl-dev libboost-all-dev ninja-build clang-tidy clang-format lldb perf cmake-curses-gui libc++-dev libpthread-stubs0-dev libncurses5-dev libtinfo-dev git-lfs git-extras googletest gcovr cppcheck clang-analyzer strace ltrace cmake-doc make-doc gdb-doc"
+dsp_libs="jack_transport_link rnbo-runner-panel libsndfile1-dev libjack-jackd2-dev portaudio19-dev libfftw3-dev libasound2-dev libsdl2-dev libpulse-dev"
+osc_libraries="libboost-system-dev libboost-filesystem-dev libboost-program-options-dev libzmq3-dev"
+additional_tools="zsh htop tree ripgrep ncdu fzf"
+# python_libraries="numpy scipy soundfile pyserial"
+
+# Create an associative array for package categories and their variables
 declare -A PACKAGES
 PACKAGES=(
-    ["essential_tools"]="build-essential cmake g++ make git tmux curl wget vim vim-gtk3 pkg-config clang valgrind gdb python3-pip libtool autoconf automake libssl-dev libboost-all-dev"
-    ["audio_dsp_libraries"]="jack_transport_link rnbo-runner-panel libsndfile1-dev libjack-jackd2-dev portaudio19-dev libfftw3-dev libasound2-dev libsdl2-dev libpulse-dev"
-    ["osc_libraries"]="libboost-system-dev libboost-filesystem-dev libboost-program-options-dev libzmq3-dev"
-    ["additional_tools"]="zsh htop tree ripgrep ncdu fzf"
-    # ["python_libraries"]="numpy scipy soundfile pyserial"
+    ["core_tools"]="$core_tools"
+    ["dsp_libs"]="$dsp_libs"
+    ["osc_libraries"]="$osc_libraries"
+    ["additional_tools"]="$additional_tools"
+    # ["python_libraries"]="$python_libraries"
 )
 
 # Function to install packages
