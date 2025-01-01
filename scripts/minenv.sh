@@ -8,16 +8,10 @@
 source ~/.dotfiles/scripts/colors.sh
 
 # Define package categories in separate variables for better maintainability
-core_tools="build-essential cmake g++ make git tmux zsh curl wget vim pkg-config clang valgrind gdb libssl-dev libboost-all-dev ninja-build perf googletest"
-additional_tools="snapd htop tree ripgrep ncdu fzf"
-# python_libraries="numpy scipy soundfile pyserial"
+#core_tools=("build-essential" "cmake" "g++" "make" "git" "tmux" "zsh" "curl" "wget" "vim" "pkg-config" "clang" "valgrind" "gdb" "libssl-dev" "libboost-all-dev" "ninja-build" "perf" "googletest")
+additional_tools=("snapd" "htop" "tree" "ripgrep" "ncdu" "fzf")
+# python_libraries=("numpy" "scipy" "soundfile" "pyserial")
 
-# Function to install packages
-# install_packages() {
-#     local -n packages=$1
-#     echo "${GRN}Installing packages: ${BGRN}${packages[*]}...${D}"
-#     sudo apt install -y "${packages[@]}"
-# }
 # Function to install packages
 install_packages() {
     local -n packages=$1
