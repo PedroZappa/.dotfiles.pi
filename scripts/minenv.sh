@@ -4,6 +4,8 @@
 # -u : Treat unset variables as an error and exit;
 # -o pipeline : Set the exit status to the last command in the pipeline that failed.
 
+DOTFILES_PATH="$HOME/.dotfiles"
+
 # Load Colors
 source ~/.dotfiles/scripts/colors.sh
 
@@ -95,9 +97,11 @@ create_symlink() {
 # **************************************************************************** #
 # **************************************************************************** #
 
-# Clone the dotfiles repository
-echo "${BLU}Cloning dotfiles repository...${D}"
-git clone "$DOTFILES_SSH_URL" "$HOME/.dotfiles"
+if [ ! -d "$HOME/.dotfiles" ]; then
+    # Clone the dotfiles repository
+    echo "${BLU}Cloning dotfiles repository...${D}"
+    git clone "$DOTFILES_SSH_URL" "$HOME/.dotfiles"
+fi
 
 for SRC in "${!FILES[@]}"; do
     DEST=${FILES[$SRC]}
