@@ -38,17 +38,27 @@ create_ssh_key() {
     display_and_confirm_ssh_key
 }
 
-# **************************************************************************** #
-# **************************************************************************** #
+# Function to set the default shell
+set_default_shell() {
+    local shell_path="$1"
 
-# Create SSH key and confirm with the user
-create_ssh_key
-
+    # Check if the shell exists
+    if command -v "$shell_path" &>/dev/null; then
+        echo "${MAG}Setting default shell to: $shell_path${D}"
+        chsh -s "$shell_path"
+        echo "${YEL}Shell set to $shell_path. Please log out and log back in for the change to take effect.${D}"
+    else
+        echo "${RED}Shell not found: $shell_path${D}"
+        exit 1
+    fi
+}
+#
 # **************************************************************************** #
 # **************************************************************************** #
 
 # Define package categories in separate variables for better maintainability
-core_tools=("build-essential" "cmake" "g++" "make" "git" "tmux" "zsh" "curl" "wget" "vim" "pkg-config" "clang" "valgrind" "gdb" "libssl-dev" "libboost-all-dev" "ninja-build" "perf" "googletest")
+SHELL=("zsh")
+core_tools=("build-essential" "cmake" "g++" "make" "git" "tmux" "curl" "wget" "vim" "clang" "valgrind" "gdb" "libssl-dev" "libboost-all-dev" "ninja-build" "perf" "googletest")
 additional_tools=("snapd" "btop" "tree" "ripgrep" "ncdu" "fzf")
 snap_packages=("neovim --classic")
 # python_libraries=("numpy" "scipy" "soundfile" "pyserial")
@@ -70,6 +80,9 @@ install_snap_package() {
 # **************************************************************************** #
 # **************************************************************************** #
 
+# Create SSH key and confirm with the user
+create_ssh_key
+
 # Update package lists
 echo "${BLU}Updating package lists...${D}"
 sudo apt update
@@ -77,6 +90,10 @@ sudo apt update
 # Upgrade installed packages to the latest version
 echo "${BBLU}Upgrading installed packages...${D}"
 sudo apt upgrade -y
+
+# Set the default shell
+install_package "$SHELL"
+set_default_shell "$SHELL"
 
 # Install the core tools
 for pkg in "${core_tools[@]}"; do
