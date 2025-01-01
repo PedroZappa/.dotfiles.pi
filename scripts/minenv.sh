@@ -14,10 +14,10 @@ additional_tools=("snapd" "htop" "tree" "ripgrep" "ncdu" "fzf")
 
 # Function to install packages
 install_packages() {
-    local -n packages=$1
+    local packages=("$@")  # Capture all arguments as an array
     for pkg in "${packages[@]}"; do
         echo "${GRN}Installing package: ${BGRN}$pkg${D}"
-        sudo apt install "$pkg" -y
+        sudo apt install -y "$pkg"
     done
 }
 
