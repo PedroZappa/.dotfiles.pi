@@ -13,10 +13,18 @@ additional_tools="snapd htop tree ripgrep ncdu fzf"
 # python_libraries="numpy scipy soundfile pyserial"
 
 # Function to install packages
+# install_packages() {
+#     local -n packages=$1
+#     echo "${GRN}Installing packages: ${BGRN}${packages[*]}...${D}"
+#     sudo apt install -y "${packages[@]}"
+# }
+# Function to install packages
 install_packages() {
     local -n packages=$1
-    echo "${GRN}Installing packages: ${BGRN}${packages[*]}...${D}"
-    sudo apt install -y "${packages[@]}"
+    for pkg in "${packages[@]}"; do
+        echo "${GRN}Installing package: ${BGRN}$pkg${D}"
+        sudo apt install -y "$pkg"
+    done
 }
 
 # **************************************************************************** #
