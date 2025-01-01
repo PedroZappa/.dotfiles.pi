@@ -73,7 +73,6 @@ install_zap() {
 # **************************************************************************** #
 
 # Define package categories in separate variables for better maintainability
-my_shell=("/usr/bin/zsh")
 core_tools=("build-essential" "cmake" "g++" "make" "git" "tmux" "curl" "wget" "vim" "clang" "valgrind" "gdb" "libssl-dev" "libboost-all-dev" "ninja-build" "googletest")
 additional_tools=("snapd" "luarocks" "btop" "tree" "ripgrep" "ncdu" "fzf")
 snap_packages=("nvim --classic")
@@ -144,9 +143,7 @@ if [ "$SHELL" != "zsh" ]; then
     set_default_shell "/usr/bin/zsh"
 fi
 # Install Zap Zsh's Package Manager
-if [ "$my_shell" == "$/usr/bin/zsh" ]; then
-    install_zap
-fi
+install_zap
 
 # Install the core tools
 for pkg in "${core_tools[@]}"; do
