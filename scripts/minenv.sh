@@ -52,6 +52,22 @@ set_default_shell() {
         exit 1
     fi
 }
+
+# Function to check if Zap is installed and install if necessary
+install_zap() {
+    local zap_check_cmd="command -v zap"
+    local zap_install_cmd="zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1"
+
+    echo "${BLU}Checking if Zap is installed...${D}"
+
+    if eval "$zap_check_cmd" &>/dev/null; then
+        echo "${GRN}Zap is already installed.${D}"
+    else
+        echo "${YEL}Zap is not installed. Installing now...${D}"
+        eval "$zap_install_cmd"
+        echo "${GRN}Zap installation complete.${D}"
+    fi
+}
 #
 # **************************************************************************** #
 # **************************************************************************** #
@@ -118,15 +134,18 @@ create_ssh_key
 # Update package lists
 echo "${BLU}Updating package lists...${D}"
 sudo apt update
-
 # Upgrade installed packages to the latest version
 echo "${BBLU}Upgrading installed packages...${D}"
 sudo apt upgrade -y
 
-# Set the default shell
+# Install prefered shell and set it as the default
 install_package "$my_shell"
 if [ "$SHELL" != "$my_shell" ]; then
     set_default_shell "$my_shell"
+fi
+# Install Zap Zsh's Package Manager
+if [ "$my_shell" == "$/usr/bin/zsh" ]; then
+    install_zap
 fi
 
 # Install the core tools
