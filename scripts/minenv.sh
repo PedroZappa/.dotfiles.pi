@@ -14,9 +14,9 @@ additional_tools="snapd htop tree ripgrep ncdu fzf"
 
 # Function to install packages
 install_packages() {
-    local packages=$1
-    echo "Installing packages: $packages..."
-    sudo apt install -y $packages
+    local -n packages=$1
+    echo "Installing packages: ${packages[*]}..."
+    sudo apt install -y "${packages[@]}"
 }
 
 # Update package lists
