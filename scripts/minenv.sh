@@ -4,14 +4,52 @@
 # -u : Treat unset variables as an error and exit;
 # -o pipeline : Set the exit status to the last command in the pipeline that failed.
 
-DOTFILES_PATH="$HOME/.dotfiles"
-
 # Load Colors
 source ~/.dotfiles/scripts/colors.sh
 
+# **************************************************************************** #
+# **************************************************************************** #
+
+# Function to display the public key and prompt for confirmation
+display_and_confirm_ssh_key() {
+    local pub_key_file="$HOME/.ssh/id_rsa.pub"
+
+    if [ -f "$pub_key_file" ]; then
+        echo "${BLU}Here is your public SSH key:${D}"
+        cat "$pub_key_file"
+        echo "${YEL}Please copy the above key to your remote server or service.${D}"
+        read -p "Press [Enter] once you've copied the key, or [Ctrl+C] to abort... "
+    else
+        echo "${RED}SSH public key file not found!${D}"
+        exit 1
+    fi
+}
+
+# Function to create SSH key if it doesn't exist
+create_ssh_key() {
+    local key_file="$HOME/.ssh/id_rsa"
+
+    if [ ! -f "$key_file" ]; then
+        echo "${MAG}Creating SSH key pair...${D}"
+        ssh-keygen
+    else
+        echo "${YEL}SSH key already exists at $key_file. Skipping key generation.${D}"
+    fi
+    display_and_confirm_ssh_key
+}
+
+# **************************************************************************** #
+# **************************************************************************** #
+
+# Create SSH key and confirm with the user
+create_ssh_key
+
+# **************************************************************************** #
+# **************************************************************************** #
+
 # Define package categories in separate variables for better maintainability
 core_tools=("build-essential" "cmake" "g++" "make" "git" "tmux" "zsh" "curl" "wget" "vim" "pkg-config" "clang" "valgrind" "gdb" "libssl-dev" "libboost-all-dev" "ninja-build" "perf" "googletest")
-additional_tools=("snapd" "htop" "tree" "ripgrep" "ncdu" "fzf")
+additional_tools=("snapd" "btop" "tree" "ripgrep" "ncdu" "fzf")
 snap_packages=("neovim --classic")
 # python_libraries=("numpy" "scipy" "soundfile" "pyserial")
 
