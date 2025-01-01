@@ -5,11 +5,11 @@
 # -o pipeline : Set the exit status to the last command in the pipeline that failed.
 
 # Load Colors
-source ./colors.sh
+source ~/.dotfiles/colors.sh
 
 # Define package categories in separate variables for better maintainability
-core_tools="build-essential cmake g++ make git tmux zsh curl wget vim ctags pkg-config clang valgrind gdb libssl-dev libboost-all-dev ninja-build perf googletest"
-additional_tools="htop tree ripgrep ncdu fzf"
+core_tools="build-essential cmake g++ make git tmux zsh curl wget vim pkg-config clang valgrind gdb libssl-dev libboost-all-dev ninja-build perf googletest"
+additional_tools="snapd htop tree ripgrep ncdu fzf"
 # python_libraries="numpy scipy soundfile pyserial"
 
 # Function to install packages
