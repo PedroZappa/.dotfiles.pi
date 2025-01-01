@@ -74,7 +74,7 @@ install_zap() {
 
 # Define package categories in separate variables for better maintainability
 core_tools=("build-essential" "cmake" "g++" "make" "git" "tmux" "curl" "wget" "vim" "clang" "valgrind" "gdb" "libssl-dev" "libboost-all-dev" "ninja-build" "googletest")
-additional_tools=("snapd" "luarocks" "btop" "tree" "ripgrep" "ncdu" "fzf")
+additional_tools=("snapd" "luarocks" "btop" "tree" "ripgrep" "ncdu" "fzf" "ranger")
 snap_packages=("nvim --classic")
 # python_libraries=("numpy" "scipy" "soundfile" "pyserial")
 
@@ -139,7 +139,7 @@ sudo apt upgrade -y
 
 # Install prefered shell and set it as the default
 install_package "zsh"
-if [ "$SHELL" != "zsh" ]; then
+if [ "$SHELL" != "/usr/bin/zsh" ]; then
     set_default_shell "/usr/bin/zsh"
 fi
 # Install Zap Zsh's Package Manager
