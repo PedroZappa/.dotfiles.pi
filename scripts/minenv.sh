@@ -139,9 +139,9 @@ echo "${BBLU}Upgrading installed packages...${D}"
 sudo apt upgrade -y
 
 # Install prefered shell and set it as the default
-install_package "$my_shell"
-if [ "$SHELL" != "$my_shell" ]; then
-    set_default_shell "$my_shell"
+install_package "zsh"
+if [ "$SHELL" != "zsh" ]; then
+    set_default_shell "/usr/bin/zsh"
 fi
 # Install Zap Zsh's Package Manager
 if [ "$my_shell" == "$/usr/bin/zsh" ]; then
