@@ -13,22 +13,18 @@ additional_tools=("snapd" "htop" "tree" "ripgrep" "ncdu" "fzf")
 snap_packages=("neovim --classic")
 # python_libraries=("numpy" "scipy" "soundfile" "pyserial")
 
-# Function to install apt packages
-install_packages() {
-    local packages=("$@")  # Capture all arguments as an array
-    for pkg in "${packages[@]}"; do
-        echo "${GRN}Installing package: ${BGRN}$pkg${D}"
-        sudo apt install -y "$pkg"
-    done
+# Function to install a single apt package
+install_package() {
+    local pkg="$1"
+    echo "${GRN}Installing package: ${BGRN}$pkg${D}"
+    sudo apt install -y "$pkg"
 }
 
-# Function to install snap packages
-install_snap_packages() {
-    local packages=("$@")  # Capture all arguments as an array
-    for pkg in "${packages[@]}"; do
-        echo "${GRN}Installing snap package: ${BGRN}$pkg${D}"
-        sudo snap install $pkg
-    done
+# Function to install a single snap package
+install_snap_package() {
+    local pkg="$1"
+    echo "${GRN}Installing snap package: ${BGRN}$pkg${D}"
+    sudo snap install $pkg
 }
 
 # **************************************************************************** #
@@ -42,11 +38,15 @@ sudo apt update
 echo "${BBLU}Upgrading installed packages...${D}"
 sudo apt upgrade -y
 
-# Install the initial batch of packages
-install_packages "$core_tools"
+# Install the core tools
+for pkg in "${core_tools[@]}"; do
+    install_package "$pkg"
+done
 
 # Install additional tools
-install_packages "$additional_tools"
+for pkg in "${additional_tools[@]}"; do
+    install_package "$pkg"
+done
 
 # Clean up to save space
 echo "${YEL}Cleaning up...${D}"
