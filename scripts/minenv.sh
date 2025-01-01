@@ -17,7 +17,7 @@ install_packages() {
     local -n packages=$1
     for pkg in "${packages[@]}"; do
         echo "${GRN}Installing package: ${BGRN}$pkg${D}"
-        sudo apt install -y "$pkg"
+        sudo apt install "$pkg" -y
     done
 }
 
