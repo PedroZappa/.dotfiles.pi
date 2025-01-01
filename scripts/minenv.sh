@@ -8,24 +8,14 @@
 source ./colors.sh
 
 # Define package categories in separate variables for better maintainability
-core_tools="build-essential cmake g++ make git tmux zsh curl wget vim pkg-config clang valgrind gdb libssl-dev libboost-all-dev ninja-build perf googletest"
+core_tools="build-essential cmake g++ make git tmux zsh curl wget vim ctags pkg-config clang valgrind gdb libssl-dev libboost-all-dev ninja-build perf googletest"
 additional_tools="htop tree ripgrep ncdu fzf"
 # python_libraries="numpy scipy soundfile pyserial"
 
-# Create an associative array for package categories and their variables
-declare -A PACKAGES
-PACKAGES=(
-    ["core_tools"]="$core_tools"
-    ["additional_tools"]="$additional_tools"
-    # ["python_libraries"]="$python_libraries"
-)
-
 # Function to install packages
 install_packages() {
-    local category=$1
-    local packages=$2
-
-    echo "Installing $category..."
+    local packages=$1
+    echo "Installing packages: $packages..."
     sudo apt install -y $packages
 }
 
@@ -37,10 +27,11 @@ sudo apt update
 echo "Upgrading installed packages..."
 sudo apt upgrade -y
 
-# Install packages from the associative array
-for category in "${!PACKAGES[@]}"; do
-    install_packages "$category" "${PACKAGES[$category]}"
-done
+# Install the initial batch of packages
+install_packages "$core_tools"
+
+# Install additional tools
+install_packages "$additional_tools"
 
 # Clean up to save space
 echo "Cleaning up..."
