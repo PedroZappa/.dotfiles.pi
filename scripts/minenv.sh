@@ -57,7 +57,7 @@ set_default_shell() {
 # **************************************************************************** #
 
 # Define package categories in separate variables for better maintainability
-SHELL=("zsh")
+my_shell=("zsh")
 core_tools=("build-essential" "cmake" "g++" "make" "git" "tmux" "curl" "wget" "vim" "clang" "valgrind" "gdb" "libssl-dev" "libboost-all-dev" "ninja-build" "perf" "googletest")
 additional_tools=("snapd" "btop" "tree" "ripgrep" "ncdu" "fzf")
 snap_packages=("neovim --classic")
@@ -124,8 +124,10 @@ echo "${BBLU}Upgrading installed packages...${D}"
 sudo apt upgrade -y
 
 # Set the default shell
-install_package "$SHELL"
-set_default_shell "$SHELL"
+install_package "$my_shell"
+if [ "$SHELL" != "$my_shell" ]; then
+    set_default_shell "$my_shell"
+fi
 
 # Install the core tools
 for pkg in "${core_tools[@]}"; do
