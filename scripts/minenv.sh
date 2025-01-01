@@ -5,7 +5,7 @@
 # -o pipeline : Set the exit status to the last command in the pipeline that failed.
 
 # Load Colors
-source ~/.dotfiles/colors.sh
+source ~/.dotfiles/scripts/colors.sh
 
 # Define package categories in separate variables for better maintainability
 core_tools="build-essential cmake g++ make git tmux zsh curl wget vim pkg-config clang valgrind gdb libssl-dev libboost-all-dev ninja-build perf googletest"
@@ -15,7 +15,7 @@ additional_tools="snapd htop tree ripgrep ncdu fzf"
 # Function to install packages
 install_packages() {
     local -n packages=$1
-    echo "Installing packages: ${packages[*]}..."
+    echo "${GRN}Installing packages: ${BGRN}${packages[*]}...${D}"
     sudo apt install -y "${packages[@]}"
 }
 
@@ -23,11 +23,11 @@ install_packages() {
 # **************************************************************************** #
 
 # Update package lists
-echo "Updating package lists..."
+echo "${BLU}Updating package lists...${D}"
 sudo apt update
 
 # Upgrade installed packages to the latest version
-echo "Upgrading installed packages..."
+echo "${BBLU}Upgrading installed packages...${D}"
 sudo apt upgrade -y
 
 # Install the initial batch of packages
@@ -37,7 +37,7 @@ install_packages "$core_tools"
 install_packages "$additional_tools"
 
 # Clean up to save space
-echo "Cleaning up..."
+echo "${YEL}Cleaning up...${D}"
 sudo apt autoremove -y
 sudo apt clean
 
