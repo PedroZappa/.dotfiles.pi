@@ -60,7 +60,7 @@ set_default_shell() {
 my_shell=("/usr/bin/zsh")
 core_tools=("build-essential" "cmake" "g++" "make" "git" "tmux" "curl" "wget" "vim" "clang" "valgrind" "gdb" "libssl-dev" "libboost-all-dev" "ninja-build" "perf" "googletest")
 additional_tools=("snapd" "btop" "tree" "ripgrep" "ncdu" "fzf")
-snap_packages=("neovim --classic")
+snap_packages=("nvim --classic")
 # python_libraries=("numpy" "scipy" "soundfile" "pyserial")
 
 # Function to install a single apt package
