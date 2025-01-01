@@ -10,14 +10,24 @@ source ~/.dotfiles/scripts/colors.sh
 # Define package categories in separate variables for better maintainability
 core_tools=("build-essential" "cmake" "g++" "make" "git" "tmux" "zsh" "curl" "wget" "vim" "pkg-config" "clang" "valgrind" "gdb" "libssl-dev" "libboost-all-dev" "ninja-build" "perf" "googletest")
 additional_tools=("snapd" "htop" "tree" "ripgrep" "ncdu" "fzf")
+snap_packages=("neovim --classic")
 # python_libraries=("numpy" "scipy" "soundfile" "pyserial")
 
-# Function to install packages
+# Function to install apt packages
 install_packages() {
     local packages=("$@")  # Capture all arguments as an array
     for pkg in "${packages[@]}"; do
         echo "${GRN}Installing package: ${BGRN}$pkg${D}"
         sudo apt install -y "$pkg"
+    done
+}
+
+# Function to install snap packages
+install_snap_packages() {
+    local packages=("$@")  # Capture all arguments as an array
+    for pkg in "${packages[@]}"; do
+        echo "${GRN}Installing snap package: ${BGRN}$pkg${D}"
+        sudo snap install $pkg
     done
 }
 
@@ -42,6 +52,10 @@ install_packages "$additional_tools"
 echo "${YEL}Cleaning up...${D}"
 sudo apt autoremove -y
 sudo apt clean
+
+# Install snap packages
+echo "${MAG}Installing snap packages...${D}"
+install_snap_packages "${snap_packages[@]}"
 
 # Install Python libraries using pip
 # echo "Installing Python libraries..."
@@ -89,3 +103,8 @@ for SRC in "${!FILES[@]}"; do
     DEST=${FILES[$SRC]}
     create_symlink "$SRC" "$DEST"
 done
+
+# **************************************************************************** #
+# **************************************************************************** #
+
+
