@@ -19,6 +19,9 @@ install_packages() {
     sudo apt install -y "${packages[@]}"
 }
 
+# **************************************************************************** #
+# **************************************************************************** #
+
 # Update package lists
 echo "Updating package lists..."
 sudo apt update
@@ -42,6 +45,11 @@ sudo apt clean
 # echo "Installing Python libraries..."
 # pip3 install --user ${PACKAGES["python_libraries"]}
 
+# **************************************************************************** #
+# **************************************************************************** #
+
+DOTFILES_SSH_URL="git@github.com:PedroZappa/dotfiles.min.git"
+
 # Associative array defining source and target FILES
 declare -A FILES
 FILES=(
@@ -50,30 +58,30 @@ FILES=(
     ["$HOME/.dotfiles/.zshenv"]="$HOME/.zshenv"
     ["$HOME/.dotfiles/.gdbinit"]="$HOME/.gdbinit"
     ["$HOME/.dotfiles/.vimrc"]="$HOME/.vimrc"
-	["$HOME/.dotfiles/starship.toml"]="$HOME/.config/starship.toml"
     ["$HOME/.dotfiles/.tmux.conf"]="$HOME/.tmux.conf"
     ["$HOME/.dotfiles/btop/"]="$HOME/.config/"
+	["$HOME/.dotfiles/starship.toml"]="$HOME/.config/"
+	["$HOME/.dotfiles/nvim"]="$HOME/.config/"
 )
-DOTFILES_SSH_URL="git@github.com:PedroZappa/dotfiles.min.git "
 
 # Create symlinks to .dotfiles
 create_symlink() {
     local SRC=$1
     local DEST=$2
 
-    # Check if the destination file/directory exists
-    if [ -e "$DEST" ]; then
-        # If it exists, move it to a backup
-        # mv "$DEST" "${DEST}_bak"
-        # echo "${YEL}Moved existing ${PRP}$DEST ${YEL}to ${PRP}${DEST}_bak${D}"
-    else
-        # Create the parent directory if it doesn't exist
-        mkdir -p "$(dirname "$DEST")"
-        # Create the symlink
-        ln -s "$SRC" "$DEST"
-        echo "${YEL}Created symlink from ${GRN}$SRC ${YEL}to ${PRP}$DEST${D}"
-    fi
+    # Create the parent directory if it doesn't exist
+    mkdir -p "$(dirname "$DEST")"
+    # Create the symlink
+    ln -s "$SRC" "$DEST"
+    echo "${YEL}Created symlink from ${GRN}$SRC ${YEL}to ${PRP}$DEST${D}"
 }
+
+# **************************************************************************** #
+# **************************************************************************** #
+
+# Clone the dotfiles repository
+echo "${BLU}Cloning dotfiles repository...${D}"
+git clone "$DOTFILES_SSH_URL" "$HOME/.dotfiles"
 
 for SRC in "${!FILES[@]}"; do
     DEST=${FILES[$SRC]}
