@@ -64,14 +64,15 @@ create_symlink() {
     # Check if the destination file/directory exists
     if [ -e "$DEST" ]; then
         # If it exists, move it to a backup
-        mv "$DEST" "${DEST}_bak"
-        echo "${YEL}Moved existing ${PRP}$DEST ${YEL}to ${PRP}${DEST}_bak${D}"
+        # mv "$DEST" "${DEST}_bak"
+        # echo "${YEL}Moved existing ${PRP}$DEST ${YEL}to ${PRP}${DEST}_bak${D}"
+    else
+        # Create the parent directory if it doesn't exist
+        mkdir -p "$(dirname "$DEST")"
+        # Create the symlink
+        ln -s "$SRC" "$DEST"
+        echo "${YEL}Created symlink from ${GRN}$SRC ${YEL}to ${PRP}$DEST${D}"
     fi
-    # Create the parent directory if it doesn't exist
-    mkdir -p "$(dirname "$DEST")"
-    # Create the symlink
-    ln -s "$SRC" "$DEST"
-    echo "${YEL}Created symlink from ${GRN}$SRC ${YEL}to ${PRP}$DEST${D}"
 }
 
 for SRC in "${!FILES[@]}"; do
