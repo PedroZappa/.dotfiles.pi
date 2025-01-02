@@ -4,6 +4,12 @@
 # -u : Treat unset variables as an error and exit;
 # -o pipeline : Set the exit status to the last command in the pipeline that failed.
 
+# Request sudo privileges upfront
+if [ "$EUID" -ne 0 ]; then
+    echo "This script requires sudo privileges. Re-running with sudo..."
+    exec sudo -E bash "$0" "$@"
+fi
+
 # Log the output
 exec > >(tee -i setup.log)
 echo "Setup script started on $(date)" | tee -a setup.log
