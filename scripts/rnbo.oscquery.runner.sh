@@ -51,10 +51,13 @@ setup_c74_repo() {
     rm -fr ~/rnbo.oscquery.runner
 
     echo -e "${BLU}Configuring Jack for realtime audio...${D}"
-    dpkg-reconfigure jackd2
+    dpkg-reconfigure jackd2 jack-tools
 
     echo -e "${BLU}Enabling dummy audio interface...${D}"
     echo "snd-dummy" >> /etc/modules
+
+    echo -e "${BLU}Adding ${GRN}${USER}${BLU} to ${RED}audioi${BLU} group...${D}"
+		sudo usermod -a -G audio $USER
 
     echo -e "${BGRN}Cycling '74 setup complete.${D} 🖔"
 }
