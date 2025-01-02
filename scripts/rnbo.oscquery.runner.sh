@@ -26,12 +26,15 @@ setup_c74_repo() {
         git clone https://github.com/Cycling74/rnbo.oscquery.runner.git
     fi
     cd rnbo.oscquery.runner/config
-    pwd
 
     echo "${BLU}Adding Cycling '74 apt repository key and sources...${D}"
-    mv apt-cycling74-pubkey.asc /usr/share/keyrings/
+
+    cmd1="mv apt-cycling74-pubkey.asc /usr/share/keyrings/"
+    echo "$cmd1" && eval "$cmd1"
     ls -al /usr/share/keyrings
-    mv cycling74.list /etc/apt/sources.list.d/
+
+    cmd2="mv cycling74.list /etc/apt/sources.list.d/"
+    echo "$cmd2" && eval "$cmd2"
     ls -al /etc/apt/sources.list.d
 
     echo "${BLU}Updating package lists and installing essential packages...${D}"
