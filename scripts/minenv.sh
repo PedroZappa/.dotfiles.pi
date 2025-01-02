@@ -55,20 +55,23 @@ set_default_shell() {
 
 # Function to check if Zap is installed and install if necessary
 install_zap() {
-    local zap_check_cmd="command -v zap"
     local zap_install_cmd="zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1"
 
     echo "${BLU}Checking if Zap is installed...${D}"
 
-    if eval "$zap_check_cmd" &>/dev/null; then
+    # Check if Zap is installed by looking for its binary or checking its configuration
+    if [ -f "$HOME/.local/share/zap" ]; then
         echo "${GRN}Zap is already installed.${D}"
     else
         echo "${YEL}Zap is not installed. Installing now...${D}"
-        eval "$zap_install_cmd"
+        eval "$zap_install_cmd" || {
+            echo "${RED}Failed to install Zap. Please check your network connection and try again.${D}"
+            return 1
+        }
         echo "${GRN}Zap installation complete.${D}"
     fi
 }
-#
+
 # **************************************************************************** #
 # **************************************************************************** #
 
