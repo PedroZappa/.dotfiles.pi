@@ -165,8 +165,8 @@ sudo apt autoremove -y
 sudo apt clean
 
 # Install snap packages
-echo "${MAG}Installing snap packages...${D}"
-install_snap_package "${snap_packages[@]}"
+# echo "${MAG}Installing snap packages...${D}"
+# install_snap_package "${snap_packages[@]}"
 
 # Clone the dotfiles repository
 if [ ! -d "$HOME/.dotfiles" ]; then
