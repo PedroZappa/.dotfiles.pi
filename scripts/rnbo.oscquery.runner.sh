@@ -4,33 +4,27 @@
 # -u : Treat unset variables as an error and exit;
 # -o pipeline : Set the exit status to the last command in the pipeline that failed.
 
-# Request sudo privileges upfront
-if [ "$EUID" -ne 0 ]; then
-    echo "This script requires sudo privileges. Re-running with sudo..."
-    exec sudo -E bash "$0" "$@"
-fi
-
 # Preserve environment variables and start logging
-exec > >(tee -i setup.log)
-echo "Setup script started on $(date)" | tee -a setup.log
+# exec > >(tee -i setup.log)
+# echo -e "Setup script started on $(date)" | tee -a setup.log
 
 # Load Colors
 source ~/.dotfiles/scripts/colors.sh
 
 # Function to add the Cycling '74 apt repository, install packages, and setup
 setup_c74_repo() {
-    echo "${MAG}Setting up Cycling '74 apt repository...${D}"
+    echo -e "${MAG}Setting up Cycling '74 apt repository...${D}"
 
-    echo "${BLU}Downloading Cycling '74 apt repository key and sources...${D}"
+    echo -e "${BLU}Downloading Cycling '74 apt repository key and sources...${D}"
     if [ ! -d "rnbo.oscquery.runner" ]; then
         git clone https://github.com/Cycling74/rnbo.oscquery.runner.git ~/rnbo.oscquery.runner
     fi
     cd ~/rnbo.oscquery.runner/config
 
-    echo "${BLU}Adding Cycling '74 apt repository key and sources...${D}"
+    echo -e "${BLU}Adding Cycling '74 apt repository key and sources...${D}"
 
     cmd1="mv apt-cycling74-pubkey.asc /usr/share/keyrings/"
-    echo "$cmd1" && eval "$cmd1"
+    echo -e "$cmd1" && eval "$cmd1"
     ls -al /usr/share/keyrings
 
     cmd2="mv cycling74.list /etc/apt/sources.list.d/"
@@ -41,56 +35,53 @@ setup_c74_repo() {
     apt-get update
     apt-get install --no-install-recommends jackd2 ccache cpufrequtils
 
-    echo "${BLU}Configuring CPU governor for performance...${D}"
+    echo -e "${BLU}Configuring CPU governor for performance...${D}"
     echo "GOVERNOR=\"performance\"" > /etc/default/cpufrequtils
 
-    echo "${BLU}Disabling IPC namespace sharing...${D}"
+    echo -e "${BLU}Disabling IPC namespace sharing...${D}"
     echo "RemoveIPC=no" >> /etc/systemd/logind.conf
 
-    echo "${BLU}Upgrading installed packages...${D}"
+    echo -e "${BLU}Upgrading installed packages...${D}"
     apt-get -y upgrade
 
-    echo "${BLU}Cleaning up unnecessary packages...${D}"
+    echo -e "${BLU}Cleaning up unnecessary packages...${D}"
     apt-get -y autoremove
     
-    echo "${YEL}Cleaning up rnbo.oscquery.runner temp directory...${D}"
+    echo -e "${YEL}Cleaning up rnbo.oscquery.runner temp directory...${D}"
     rm -fr ~/rnbo.oscquery.runner
 
-    echo "${BLU}Configuring Jack for realtime audio...${D}"
+    echo -e "${BLU}Configuring Jack for realtime audio...${D}"
     dpkg-reconfigure jackd2
 
-    echo "${BLU}Enabling dummy audio interface...${D}"
+    echo -e "${BLU}Enabling dummy audio interface...${D}"
     echo "snd-dummy" >> /etc/modules
 
-    echo "${BGRN}Cycling '74 setup complete.${D} 🖔"
+    echo -e "${BGRN}Cycling '74 setup complete.${D} 🖔"
 }
 
 # Function to install and setup rnbooscquery
 setup_rnbooscquery() {
-    echo "${MAG}Setting up rnbooscquery...${D}"
+    echo -e "${MAG}Setting up rnbooscquery...${D}"
 
     # You can change the version string to match the desired RNBO version
-    echo "${BLU}Installing specific version of rnbooscquery...${D}"
+    echo -e "${BLU}Installing specific version of rnbooscquery...${D}"
     apt-get install -y --allow-change-held-packages --allow-downgrades rnbooscquery=1.3.3
 
-    echo "${BLU}Installing required packages for rnbooscquery...${D}"
+    echo -e "${BLU}Installing required packages for rnbooscquery...${D}"
     apt-get install -y jack_transport_link rnbo-runner-panel
 
-    echo "${BLU}Marking rnbooscquery package to hold the installed version...${D}"
+    echo -e "${BLU}Marking rnbooscquery package to hold the installed version...${D}"
     apt-mark hold rnbooscquery
 
-    echo "${GRN}rnbooscquery setup complete.${D} 🖔"
+    echo -e "${GRN}rnbooscquery setup complete.${D} 🖔"
 }
 
 setup_52nvdac() {
-    echo "${MAG}Setting up 52PI:NVDAC...${D}"
-
+    echo -e "${MAG}Setting up 52PI:NVDAC...${D}"
     # Remove the default dtparam=audio=on
     sudo sed -i '/^dtparam=audio=on$/d' /boot/firmware/config.txt
-
     # Insert dtoverlay=hifiberry-dacplus,slave after the line containing "# Enable audio"
     sudo sed -i '/# Enable audio/a dtoverlay=hifiberry-dacplus,slave' /boot/firmware/config.txt
-
 }
 
 # **************************************************************************** #
@@ -111,10 +102,10 @@ read -p "Do you want to reboot now? (y/n): " input
 
 if [[ "$input" =~ ^[Yy]$ ]]; then
     # Reboot to apply all changes
-    echo "${YEL}Rebooting to apply changes...${D}"
+    echo -e "${YEL}Rebooting to apply changes...${D}"
     reboot
 else
-    echo "${YEL}Reboot postponed. Please reboot manually later to apply the changes.${D}"
+    echo -e "${YEL}Reboot postponed. Please reboot manually later to apply the changes.${D}"
 fi
 
 # **************************************************************************** #

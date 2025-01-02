@@ -5,8 +5,8 @@
 # -o pipeline : Set the exit status to the last command in the pipeline that failed.
 
 # Log the output
-exec > >(tee -i pienv_setup.log)
-echo -e "Setup script started on $(date)" | tee -a setup.log
+# exec > >(tee -i pienv_setup.log)
+# echo -e "Setup script started on $(date)" | tee -a setup.log
 
 # Load Colors
 source ~/.dotfiles/scripts/colors.sh
