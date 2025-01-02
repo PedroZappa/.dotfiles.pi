@@ -156,7 +156,11 @@ fi
 install_package "git"
 install_zap
 
+echo "${BBLU}Getting TPM (Tmux Plugin Manager)...${D}"
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 # Install the core tools
+echo "${BGRN}Installing 
 for pkg in "${core_tools[@]}"; do
     install_package "$pkg"
 done
