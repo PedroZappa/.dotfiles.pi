@@ -101,7 +101,6 @@ setup_52nvdac
 read -p "Do you want to reboot now? (y/n): " input
 
 if [[ "$input" =~ ^[Yy]$ ]]; then
-    # Reboot to apply all changes
     echo -e "${YEL}Rebooting to apply changes...${D}"
     reboot
 else
