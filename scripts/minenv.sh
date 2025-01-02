@@ -101,7 +101,7 @@ install_snap_package() {
 # **************************************************************************** #
 # **************************************************************************** #
 
-DOTFILES_SSH_URL="git@github.com:PedroZappa/dotfiles.min.git"
+DOTFILES_SSH_URL="git@github.com:PedroZappa/.dotfiles.min.git"
 
 # Associative array defining source and target FILES
 declare -A FILES
@@ -170,10 +170,6 @@ done
 echo "${YEL}Cleaning up...${D}"
 sudo apt-get autoremove -y
 sudo apt-get clean
-
-# Install snap packages
-# echo "${MAG}Installing snap packages...${D}"
-# install_snap_package "${snap_packages[@]}"
 
 # Clone the dotfiles repository
 if [ ! -d "$HOME/.dotfiles" ]; then
