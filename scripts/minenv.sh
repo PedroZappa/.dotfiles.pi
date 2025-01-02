@@ -175,7 +175,7 @@ sudo apt-get clean
 if [ ! -d "$HOME/.dotfiles" ]; then
     # Clone the dotfiles repository
     echo "${BLU}Cloning dotfiles repository...${D}"
-    git clone $DOTFILES_SSH_URL "~/.dotfiles"
+    git clone $DOTFILES_SSH_URL ~/.dotfiles
 fi
 
 # Create symlinks
