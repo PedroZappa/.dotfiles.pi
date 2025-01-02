@@ -143,10 +143,10 @@ sudo localectl set-locale LANG="$locale"
 
 # Update package lists
 echo "${BLU}Updating package lists...${D}"
-sudo apt update
+sudo apt-get update
 # Upgrade installed packages to the latest version
 echo "${BBLU}Upgrading installed packages...${D}"
-sudo apt upgrade -y
+sudo apt-get upgrade -y
 
 # Install prefered shell and set it as the default
 install_package "zsh"
@@ -168,8 +168,8 @@ done
 
 # Clean up to save space
 echo "${YEL}Cleaning up...${D}"
-sudo apt autoremove -y
-sudo apt clean
+sudo apt-get autoremove -y
+sudo apt-get clean
 
 # Install snap packages
 # echo "${MAG}Installing snap packages...${D}"
