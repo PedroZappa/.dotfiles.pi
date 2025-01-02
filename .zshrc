@@ -41,6 +41,9 @@ alias v='nvim'
 alias vc='vim | lolcat'
 alias clear_nvim='rm -rf ~/.local/share/nvim'
 
+ # tmux
+ alias zmux=~/.dotfiles/scripts/tmux/zmux-init.sh
+ alias xmux=~/.dotfiles/scripts/tmux/zmux-kill.sh
 
 ##############################
 ### File System Navigation ###
