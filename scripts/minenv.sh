@@ -60,7 +60,7 @@ install_zap() {
     echo "${BLU}Checking if Zap is installed...${D}"
 
     # Check if Zap is installed by looking for its binary or checking its configuration
-    if [ -f "$HOME/.local/share/zap" ]; then
+    if [ -d "$HOME/.local/share/zap" ]; then
         echo "${GRN}Zap is already installed.${D}"
     else
         echo "${YEL}Zap is not installed. Installing now...${D}"
