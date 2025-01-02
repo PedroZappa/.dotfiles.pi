@@ -23,9 +23,9 @@ setup_c74_repo() {
 
     echo "${BLU}Downloading Cycling '74 apt repository key and sources...${D}"
     if [ ! -d "rnbo.oscquery.runner" ]; then
-        git clone https://github.com/Cycling74/rnbo.oscquery.runner.git
+        git clone https://github.com/Cycling74/rnbo.oscquery.runner.git ~/rnbo.oscquery.runner
     fi
-    cd rnbo.oscquery.runner/config
+    cd ~/rnbo.oscquery.runner/config
 
     echo "${BLU}Adding Cycling '74 apt repository key and sources...${D}"
 
@@ -52,6 +52,9 @@ setup_c74_repo() {
 
     echo "${BLU}Cleaning up unnecessary packages...${D}"
     apt-get -y autoremove
+    
+    echo "${YEL}Cleaning up rnbo.oscquery.runner temp directory...${D}"
+    rm -fr ~/rnbo.oscquery.runner
 
     echo "${BLU}Configuring Jack for realtime audio...${D}"
     dpkg-reconfigure jackd2
@@ -59,7 +62,7 @@ setup_c74_repo() {
     echo "${BLU}Enabling dummy audio interface...${D}"
     echo "snd-dummy" >> /etc/modules
 
-    echo "${GRN}Cycling '74 setup complete.${D} 🖔"
+    echo "${BGRN}Cycling '74 setup complete.${D} 🖔"
 }
 
 # Function to install and setup rnbooscquery
