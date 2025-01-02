@@ -30,7 +30,9 @@ setup_c74_repo() {
 
     echo "${BLU}Adding Cycling '74 apt repository key and sources...${D}"
     mv apt-cycling74-pubkey.asc /usr/share/keyrings/
+    ls -al /usr/share/keyrings
     mv cycling74.list /etc/apt/sources.list.d/
+    ls -al /etc/apt/sources.list.d
 
     echo "${BLU}Updating package lists and installing essential packages...${D}"
     apt-get update
