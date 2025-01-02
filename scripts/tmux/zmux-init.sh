@@ -37,7 +37,7 @@ tmux send-keys		-t RC:1 'cd $HOME/.dotfiles' C-m
 tmux send-keys		-t RC:1 'git pull' C-m
 # Create JACK Audio Control Kit window
 tmux new-window		-t RC:2 -n 'JACK'
-tmux send-keys		-t RC:2 'cd $HOME/.jack' C-m
+tmux send-keys		-t RC:2 'cd $HOME/' C-m
 tmux split-window	-t RC:2 -v
 tmux send-keys		-t RC:2 'alsamixer' C-m
 
