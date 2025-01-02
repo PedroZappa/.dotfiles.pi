@@ -81,7 +81,7 @@ install_zap() {
 
 # Define package categories in separate variables for better maintainability
 core_tools=("build-essential" "cmake" "g++" "make" "git" "tmux" "curl" "wget" "vim" "clang" "valgrind" "gdb" "libssl-dev" "libboost-all-dev" "ninja-build" "googletest")
-additional_tools=("snapd" "luarocks" "btop" "tree" "ripgrep" "ncdu" "fzf" "ranger" "nmon")
+additional_tools=("snapd" "luarocks" "btop" "lnav" "tree" "ripgrep" "ncdu" "fzf" "ranger" "nmon")
 snap_packages=("nvim --classic")
 
 # Function to install a single apt package
