@@ -6,7 +6,7 @@
 
 # Log the output
 exec > >(tee -i pienv_setup.log)
-echo "Setup script started on $(date)" | tee -a setup.log
+echo -e "Setup script started on $(date)" | tee -a setup.log
 
 # Load Colors
 source ~/.dotfiles/scripts/colors.sh
@@ -19,12 +19,12 @@ display_and_confirm_ssh_key() {
     local pub_key_file="$HOME/.ssh/id_rsa.pub"
 
     if [ -f "$pub_key_file" ]; then
-        echo "${BLU}Here is your public SSH key:${D}"
+        echo -e "${BLU}Here is your public SSH key:${D}"
         cat "$pub_key_file"
-        echo "${YEL}Please copy the above key to your remote server or service.${D}"
+        echo -e "${YEL}Please copy the above key to your remote server or service.${D}"
         read -p "Press [Enter] once you've copied the key, or [Ctrl+C] to abort... "
     else
-        echo "${RED}SSH public key file not found!${D}"
+        echo -e "${RED}SSH public key file not found!${D}"
     fi
 }
 
@@ -33,10 +33,10 @@ create_ssh_key() {
     local pub_key_file="$HOME/.ssh/id_rsa.pub"
 
     if [ ! -d "$pub_key_file" ]; then
-        echo "${MAG}Creating SSH key pair...${D}"
+        echo -e "${MAG}Creating SSH key pair...${D}"
         ssh-keygen
     else
-        echo "${YEL}SSH key already exists at $pub_key_file. Skipping key generation.${D}"
+        echo -e "${YEL}SSH key already exists at $pub_key_file. Skipping key generation.${D}"
     fi
     display_and_confirm_ssh_key
 }
@@ -47,11 +47,11 @@ set_default_shell() {
 
     # Check if the shell exists
     if command -v "$shell_path" &>/dev/null; then
-        echo "${MAG}Setting default shell to: $shell_path${D}"
+        echo -e "${MAG}Setting default shell to: $shell_path${D}"
         chsh -s "$shell_path"
-        echo "${YEL}Shell set to $shell_path. Please log out and log back in for the change to take effect.${D}"
+        echo -e "${YEL}Shell set to $shell_path. Please log out and log back in for the change to take effect.${D}"
     else
-        echo "${RED}Shell not found: $shell_path${D}"
+        echo -e "${RED}Shell not found: $shell_path${D}"
         exit 1
     fi
 }
@@ -60,18 +60,18 @@ set_default_shell() {
 install_zap() {
     local zap_install_cmd="zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1"
 
-    echo "${BLU}Checking if Zap is installed...${D}"
+    echo -e "${BLU}Checking if Zap is installed...${D}"
 
     # Check if Zap is installed by looking for its binary or checking its configuration
     if [ -d "$HOME/.local/share/zap" ]; then
-        echo "${BYEL}Zap is already installed.${D}"
+        echo -e "${BYEL}Zap is already installed.${D}"
     else
-        echo "${BMAG}Zap is not installed. Installing now...${D}"
+        echo -e "${BMAG}Zap is not installed. Installing now...${D}"
         eval "$zap_install_cmd" || {
             echo "${RED}Failed to install Zap. Please check your network connection and try again.${D}"
             return 1
         }
-        echo "${BGRN}Zap installation complete.${D}"
+        echo -e "${BGRN}Zap installation complete.${D}"
     fi
 }
 
@@ -86,14 +86,14 @@ snap_packages=("nvim --classic")
 # Function to install a single apt package
 install_package() {
     local pkg="$1"
-    echo "${GRN}Installing package: ${BGRN}$pkg${D}"
+    echo -e "${GRN}Installing package: ${BGRN}$pkg${D}"
     sudo apt-get install -y "$pkg"
 }
 
 # Function to install a single snap package
 install_snap_package() {
     local pkg="$1"
-    echo "${GRN}Installing snap package: ${BGRN}$pkg${D}"
+    echo -e "${GRN}Installing snap package: ${BGRN}$pkg${D}"
     sudo snap install $pkg
 }
 
@@ -125,7 +125,7 @@ create_symlink() {
     mkdir -p "$(dirname "$DEST")"
     # Create the symlink
     ln -s "$SRC" "$DEST"
-    echo "${YEL}Created symlink from ${GRN}$SRC ${YEL}to ${PRP}$DEST${D}"
+    echo -e "${YEL}Created symlink from ${GRN}$SRC ${YEL}to ${PRP}$DEST${D}"
 }
 #
 # **************************************************************************** #
@@ -141,10 +141,10 @@ create_ssh_key
 sudo localectl set-locale LANG="$locale"
 
 # Update package lists
-echo "${BLU}Updating package lists...${D}"
+echo -e "${BLU}Updating package lists...${D}"
 sudo apt-get update
 # Upgrade installed packages to the latest version
-echo "${BBLU}Upgrading installed packages...${D}"
+echo -e "${BBLU}Upgrading installed packages...${D}"
 sudo apt-get upgrade -y
 
 # Install prefered shell and set it as the default
@@ -156,34 +156,42 @@ fi
 install_package "git"
 install_zap
 
-echo "${BBLU}Getting TPM (Tmux Plugin Manager)...${D}"
+echo -e "${BBLU}Getting TPM (Tmux Plugin Manager)...${D}"
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-# Install the core tools
-echo "${BGRN}Installing 
-for pkg in "${core_tools[@]}"; do
-    install_package "$pkg"
-done
+#
+read -p "${BYEL}Do you want to install ${BBLU}Packages? ${BWHI}[y/n]${D}: " input
 
-# Install additional tools
-for pkg in "${additional_tools[@]}"; do
-    install_package "$pkg"
-done
+if [[ "$input" =~ ^[Yy]$ ]]; then
+	# Install the core tools
+	echo -e "${BGRN}Installing Core Tools${D}"
+	for pkg in "${core_tools[@]}"; do
+			install_package "$pkg"
+	done
 
-# Install snap packages
-for pkg in "${snap_packages[@]}"; do
-    install_snap_package "$pkg"
-done
+	# Install additional tools
+	for pkg in "${additional_tools[@]}"; do
+			install_package "$pkg"
+	done
 
-# Clean up to save space
-echo "${YEL}Cleaning up...${D}"
-sudo apt-get autoremove -y
-sudo apt-get clean
+	# Install snap packages
+	for pkg in "${snap_packages[@]}"; do
+			install_snap_package "$pkg"
+	done
+
+	# Clean up to save space
+	echo -e "${YEL}Cleaning up...${D}"
+	sudo apt-get autoremove -y
+	sudo apt-get clean
+else
+  echo -e "${MAG}Skipping RNBO installation.${D}"
+fi
+
 
 # Clone the dotfiles repository
 if [ ! -d "$HOME/.dotfiles" ]; then
     # Clone the dotfiles repository
-    echo "${BLU}Cloning dotfiles repository...${D}"
+    echo -e "${BLU}Cloning dotfiles repository...${D}"
     git clone $DOTFILES_SSH_URL ~/.dotfiles
 fi
 
@@ -196,10 +204,10 @@ done
 # Install RNBO deps
 
 # Ask the user if they want to install RNBO dependencies
-read -p "${BYEL}Do you want to install ${BBLU}RNBO dependencies (including rnbo.oscquery.runner)? ${BWHT}[y/n]${D}: " input
+read -p "${BYEL}Do you want to install ${BBLU}RNBO dependencies (including rnbo.oscquery.runner)? ${BWHI}[y/n]${D}: " input
 
 if [[ "$input" =~ ^[Yy]$ ]]; then
-    echo "${MAG}Proceeding with RNBO setup...${D}"
+    echo -e "${MAG}Proceeding with RNBO setup...${D}"
 
     if [ -f "~/.dotfiles/scripts/rnbo.oscquery.runner.sh" ]; then
         # If the script exists locally, run it
@@ -207,12 +215,12 @@ if [[ "$input" =~ ^[Yy]$ ]]; then
         bash ~/.dotfiles/scripts/rnbo.oscquery.runner.sh
     else
         # If the script doesn't exist, clone it and run
-        echo "${YEL}Cloning rnbo.oscquery.runner.sh from repository...${D}"
+        echo -e "${YEL}Cloning rnbo.oscquery.runner.sh from repository...${D}"
         wget https://raw.githubusercontent.com/PedroZappa/.dotfiles.min/refs/heads/main/scripts/rnbo.oscquery.runner.sh
         bash rnbo.oscquery.runner.sh
     fi
 else
-    echo "${MAG}Skipping RNBO installation.${D}"
+    echo -e "${MAG}Skipping RNBO installation.${D}"
 fi
 
 # **************************************************************************** #
