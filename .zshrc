@@ -66,12 +66,12 @@ alias clear_nvim='rm -rf ~/.local/share/nvim'
 ##############################
 
 # cd || zoxide
-if command -v zoxide > /dev/null 2>&1; then
-	eval "$(zoxide init --cmd cd zsh)"
-	echo "[Running ${GREEN}zoxide${NC}! 📂]"
-else
-	echo "[Running ${YELLOW}cd${NC}! 📂]"
-fi
+# if command -v zoxide > /dev/null 2>&1; then
+# 	eval "$(zoxide init --cmd cd zsh)"
+# 	echo "[Running ${GREEN}zoxide${NC}! 📂]"
+# else
+# 	echo "[Running ${YELLOW}cd${NC}! 📂]"
+# fi
 
 # ls || eza
 if command -v eza > /dev/null 2>&1; then
