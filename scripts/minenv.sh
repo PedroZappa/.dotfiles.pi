@@ -88,7 +88,7 @@ snap_packages=("nvim --classic")
 install_package() {
     local pkg="$1"
     echo "${GRN}Installing package: ${BGRN}$pkg${D}"
-    sudo apt install -y "$pkg"
+    sudo apt-get install -y "$pkg"
 }
 
 # Function to install a single snap package
