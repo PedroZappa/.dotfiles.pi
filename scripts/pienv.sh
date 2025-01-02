@@ -172,6 +172,11 @@ for pkg in "${additional_tools[@]}"; do
     install_package "$pkg"
 done
 
+# Install snap packages
+for pkg in "${snap_packages[@]}"; do
+    install_snap_package "$pkg"
+done
+
 # Clean up to save space
 echo "${YEL}Cleaning up...${D}"
 sudo apt-get autoremove -y
