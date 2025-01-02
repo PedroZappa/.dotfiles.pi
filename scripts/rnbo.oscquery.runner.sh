@@ -93,6 +93,9 @@ setup_52nvdac() {
 
 }
 
+# **************************************************************************** #
+# **************************************************************************** #
+
 # Main setup steps
 # Set up Cycling '74 repository and install packages
 setup_c74_repo
@@ -103,6 +106,16 @@ setup_rnbooscquery
 # Set up 52nvdac
 setup_52nvdac
 
-# Reboot to apply all changes
-echo "${YEL}Rebooting to apply changes...${D}"
-reboot
+# Ask user if they want to reboot now
+read -p "Do you want to reboot now? (y/n): " input
+
+if [[ "$input" =~ ^[Yy]$ ]]; then
+    # Reboot to apply all changes
+    echo "${YEL}Rebooting to apply changes...${D}"
+    reboot
+else
+    echo "${YEL}Reboot postponed. Please reboot manually later to apply the changes.${D}"
+fi
+
+# **************************************************************************** #
+# **************************************************************************** #
