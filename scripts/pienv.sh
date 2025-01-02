@@ -37,9 +37,9 @@ display_and_confirm_ssh_key() {
 
 # Function to create SSH key if it doesn't exist
 create_ssh_key() {
-    local key_file="$HOME/.ssh/id_rsa"
+    local key_file="$HOME/.ssh/"
 
-    if [ ! -f "$key_file" ]; then
+    if [ ! -d "$key_file" ]; then
         echo "${MAG}Creating SSH key pair...${D}"
         ssh-keygen
     else
