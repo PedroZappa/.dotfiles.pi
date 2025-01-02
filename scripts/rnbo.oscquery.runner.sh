@@ -82,12 +82,26 @@ setup_rnbooscquery() {
     echo "${GRN}rnbooscquery setup complete.${D} 🖔"
 }
 
+setup_52nvdac() {
+    echo "${MAG}Setting up 52PI:NVDAC...${D}"
+
+    # Remove the default dtparam=audio=on
+    sudo sed -i '/^dtparam=audio=on$/d' /boot/firmware/config.txt
+
+    # Insert dtoverlay=hifiberry-dacplus,slave after the line containing "# Enable audio"
+    sudo sed -i '/# Enable audio/a dtoverlay=hifiberry-dacplus,slave' /boot/firmware/config.txt
+
+}
+
 # Main setup steps
 # Set up Cycling '74 repository and install packages
 setup_c74_repo
 
 # Set up rnbooscquery
 setup_rnbooscquery
+
+# Set up 52nvdac
+setup_52nvdac
 
 # Reboot to apply all changes
 echo "${YEL}Rebooting to apply changes...${D}"
