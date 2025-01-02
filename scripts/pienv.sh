@@ -71,14 +71,14 @@ install_zap() {
 
     # Check if Zap is installed by looking for its binary or checking its configuration
     if [ -d "$HOME/.local/share/zap" ]; then
-        echo "${GRN}Zap is already installed.${D}"
+        echo "${BYEL}Zap is already installed.${D}"
     else
-        echo "${YEL}Zap is not installed. Installing now...${D}"
+        echo "${BMAG}Zap is not installed. Installing now...${D}"
         eval "$zap_install_cmd" || {
             echo "${RED}Failed to install Zap. Please check your network connection and try again.${D}"
             return 1
         }
-        echo "${GRN}Zap installation complete.${D}"
+        echo "${BGRN}Zap installation complete.${D}"
     fi
 }
 
@@ -205,7 +205,7 @@ if [[ "$input" =~ ^[Yy]$ ]]; then
     else
         # If the script doesn't exist, clone it and run
         echo "${YEL}Cloning rnbo.oscquery.runner.sh from repository...${D}"
-        git clone https://raw.githubusercontent.com/PedroZappa/.dotfiles.min/refs/heads/main/scripts/rnbo.oscquery.runner.sh
+        wget https://raw.githubusercontent.com/PedroZappa/.dotfiles.min/refs/heads/main/scripts/rnbo.oscquery.runner.sh
         bash rnbo.oscquery.runner.sh
     fi
 else
