@@ -31,7 +31,6 @@ display_and_confirm_ssh_key() {
         read -p "Press [Enter] once you've copied the key, or [Ctrl+C] to abort... "
     else
         echo "${RED}SSH public key file not found!${D}"
-        exit 1
     fi
 }
 
@@ -156,7 +155,7 @@ sudo apt-get upgrade -y
 
 # Install prefered shell and set it as the default
 install_package "zsh"
-if [ "$SHELL" != "/usr/bin/zsh" ]; then
+if [ $SHELL != "/usr/bin/zsh" ]; then
     set_default_shell "/usr/bin/zsh"
 fi
 # Install Zap Zsh's Package Manager
