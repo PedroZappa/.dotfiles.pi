@@ -22,7 +22,7 @@ setup_c74_repo() {
     echo "${MAG}Setting up Cycling '74 apt repository...${D}"
 
     echo "${BLU}Downloading Cycling '74 apt repository key and sources...${D}"
-    git clone git@github.com:Cycling74/rnbo.oscquery.runner.git
+    git clone https://github.com/Cycling74/rnbo.oscquery.runner.git
     cd rnbo.oscquery.runner
 
     echo "${BLU}Adding Cycling '74 apt repository key and sources...${D}"
