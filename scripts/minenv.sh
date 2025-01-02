@@ -74,7 +74,7 @@ install_zap() {
 
 # Define package categories in separate variables for better maintainability
 core_tools=("build-essential" "cmake" "g++" "make" "git" "tmux" "curl" "wget" "vim" "clang" "valgrind" "gdb" "libssl-dev" "libboost-all-dev" "ninja-build" "googletest")
-additional_tools=("snapd" "luarocks" "btop" "tree" "ripgrep" "ncdu" "fzf" "ranger")
+additional_tools=("snapd" "luarocks" "btop" "tree" "ripgrep" "ncdu" "fzf" "ranger" "nmon")
 snap_packages=("nvim --classic")
 
 # Function to install a single apt package
@@ -181,7 +181,9 @@ for SRC in "${!FILES[@]}"; do
     create_symlink "$SRC" "$DEST"
 done
 
+# Log the output
+exec > >(tee -i setup.log)
+exec 2>&1
+
 # **************************************************************************** #
 # **************************************************************************** #
-
-
