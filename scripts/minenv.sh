@@ -4,6 +4,10 @@
 # -u : Treat unset variables as an error and exit;
 # -o pipeline : Set the exit status to the last command in the pipeline that failed.
 
+# Log the output
+exec > >(tee -i setup.log)
+exec 2>&1
+
 # Load Colors
 source ~/.dotfiles/scripts/colors.sh
 
@@ -183,10 +187,6 @@ for SRC in "${!FILES[@]}"; do
     DEST=${FILES[$SRC]}
     create_symlink "$SRC" "$DEST"
 done
-
-# Log the output
-exec > >(tee -i setup.log)
-exec 2>&1
 
 # **************************************************************************** #
 # **************************************************************************** #
