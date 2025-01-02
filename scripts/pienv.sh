@@ -11,7 +11,7 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # Log the output
-exec > >(tee -i setup.log)
+exec > >(tee -i pienv_setup.log)
 echo "Setup script started on $(date)" | tee -a setup.log
 
 # Load Colors
