@@ -6,7 +6,7 @@
 
 # Log the output
 exec > >(tee -i setup.log)
-exec 2>&1
+echo "Setup script started on $(date)" | tee -a setup.log
 
 # Load Colors
 source ~/.dotfiles/scripts/colors.sh
