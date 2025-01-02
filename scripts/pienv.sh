@@ -190,5 +190,27 @@ for SRC in "${!FILES[@]}"; do
     create_symlink "$SRC" "$DEST"
 done
 
+# Install RNBO deps
+
+# Ask the user if they want to install RNBO dependencies
+read -p "${BYEL}Do you want to install ${BBLU}RNBO dependencies (including rnbo.oscquery.runner)? ${BWHT}[y/n]${D}: " input
+
+if [[ "$input" =~ ^[Yy]$ ]]; then
+    echo "${MAG}Proceeding with RNBO setup...${D}"
+
+    if [ -f "~/.dotfiles/scripts/rnbo.oscquery.runner.sh" ]; then
+        # If the script exists locally, run it
+        echo "${YEL}Found rnbo.oscquery.runner.sh locally. Running...${D}"
+        bash ~/.dotfiles/scripts/rnbo.oscquery.runner.sh
+    else
+        # If the script doesn't exist, clone it and run
+        echo "${YEL}Cloning rnbo.oscquery.runner.sh from repository...${D}"
+        git clone https://raw.githubusercontent.com/PedroZappa/.dotfiles.min/refs/heads/main/scripts/rnbo.oscquery.runner.sh
+        bash rnbo.oscquery.runner.sh
+    fi
+else
+    echo "${YEL}Skipping RNBO installation.${D}"
+fi
+
 # **************************************************************************** #
 # **************************************************************************** #
