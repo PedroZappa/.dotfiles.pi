@@ -76,7 +76,6 @@ install_zap() {
 core_tools=("build-essential" "cmake" "g++" "make" "git" "tmux" "curl" "wget" "vim" "clang" "valgrind" "gdb" "libssl-dev" "libboost-all-dev" "ninja-build" "googletest")
 additional_tools=("snapd" "luarocks" "btop" "tree" "ripgrep" "ncdu" "fzf" "ranger")
 snap_packages=("nvim --classic")
-# python_libraries=("numpy" "scipy" "soundfile" "pyserial")
 
 # Function to install a single apt package
 install_package() {
@@ -127,8 +126,13 @@ create_symlink() {
 #                                 GO BASH GO!                                  #
 # **************************************************************************** #
 
+locale="en_US.UTF-8"
+
 # Create SSH key and confirm with the user
 create_ssh_key
+
+# Set the locale
+sudo localectl set-locale LANG="$locale"
 
 # Update package lists
 echo "${BLU}Updating package lists...${D}"
@@ -164,16 +168,14 @@ sudo apt clean
 echo "${MAG}Installing snap packages...${D}"
 install_snap_package "${snap_packages[@]}"
 
-# Install Python libraries using pip
-# echo "Installing Python libraries..."
-# pip3 install --user ${PACKAGES["python_libraries"]}
-
+# Clone the dotfiles repository
 if [ ! -d "$HOME/.dotfiles" ]; then
     # Clone the dotfiles repository
     echo "${BLU}Cloning dotfiles repository...${D}"
     git clone "$DOTFILES_SSH_URL" "$HOME/.dotfiles"
 fi
 
+# Create symlinks
 for SRC in "${!FILES[@]}"; do
     DEST=${FILES[$SRC]}
     create_symlink "$SRC" "$DEST"
