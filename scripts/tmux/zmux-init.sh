@@ -35,7 +35,6 @@ tmux new-session	-d -s $SESH1
 tmux rename-window	-t RC:1 '.dotfiles'
 tmux send-keys		-t RC:1 'cd $HOME/.dotfiles' C-m
 tmux send-keys		-t RC:1 'git pull' C-m
-# tmux send-keys		-t RC:1 $EDITOR C-m
 # Create JACK Audio Control Kit window
 tmux new-window		-t RC:2 -n 'JACK'
 tmux send-keys		-t RC:2 'cd $HOME/.jack' C-m
@@ -47,7 +46,7 @@ tmux new-session	-d -s $SESH2
 # Create Working Project window
 tmux rename-window	-t DEV:1 "$PROJECT_NAME"
 tmux send-keys		-t DEV:1 'cd '$DEV_DIR C-m
-tmux send-keys		-t DEV:1 '' C-m
+tmux send-keys		-t DEV:1 'clear' C-m
 
 # Attach to DEV session
 tmux attach-session -t DEV:1
