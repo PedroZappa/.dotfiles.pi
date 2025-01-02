@@ -1,3 +1,22 @@
+###############
+### General ###
+###############
+
+# Correct wrong spellings
+setopt correct
+
+# Load and initialise completion system
+autoload -Uz compinit
+compinit
+ 
+# Load colors
+autoload -U colors && colors
+for COLOR in RED GREEN YELLOW BLUE MAGENTA CYAN BLACK WHITE; do
+   eval $COLOR='$fg_no_bold[${(L)COLOR}]'
+   eval BOLD_$COLOR='$fg_bold[${(L)COLOR}]'
+done
+eval NC='$reset_color'
+
 ##########################
 ### Zap Plugin Manager ###
 ##########################
@@ -15,11 +34,7 @@ plug "web-search"
 plug "zap-zsh/fzf"
 plug "zap-zsh/web-search"
 plug "jeffreytse/zsh-vi-mode"
-plug "zap-zsh/zap-prompt"
-
-# Load and initialise completion system
-autoload -Uz compinit
-compinit
+# plug "zap-zsh/zap-prompt"
 
 # git
 alias ga='git add'
@@ -34,6 +49,7 @@ alias glgg='git log --graph --oneline --decorate'
 alias glgs='git log --graph --oneline --decorate | head -n 7'
 alias gm='git merge --stat --log'
 
+# vim
 alias svim='sudo vim -u ~/.vimrc' 
 
 # Neovim
@@ -56,6 +72,7 @@ if command -v zoxide > /dev/null 2>&1; then
 else
 	echo "[Running ${YELLOW}cd${NC}! 📂]"
 fi
+
 # ls || eza
 if command -v eza > /dev/null 2>&1; then
 	echo "[Running ${GREEN}eza${NC}! 📊]"
@@ -72,10 +89,10 @@ fi
 ### Load Starship Prompt ###
 ############################
 
-#if command -v starship > /dev/null 2>&1; then
-#    eval "$(starship init zsh)"
-#else
-#    ZSH_THEME="refined"
-#fi
+if command -v starship > /dev/null 2>&1; then
+   eval "$(starship init zsh)"
+else
+   ZSH_THEME="refined"
+fi
 
 ZSH_THEME="refined"
