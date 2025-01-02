@@ -36,13 +36,13 @@ display_and_confirm_ssh_key() {
 
 # Function to create SSH key if it doesn't exist
 create_ssh_key() {
-    local key_file="$HOME/.ssh/"
+    local pub_key_file="$HOME/.ssh/id_rsa.pub"
 
-    if [ ! -d "$key_file" ]; then
+    if [ ! -d "$pub_key_file" ]; then
         echo "${MAG}Creating SSH key pair...${D}"
         ssh-keygen
     else
-        echo "${YEL}SSH key already exists at $key_file. Skipping key generation.${D}"
+        echo "${YEL}SSH key already exists at $pub_key_file. Skipping key generation.${D}"
     fi
     display_and_confirm_ssh_key
 }
