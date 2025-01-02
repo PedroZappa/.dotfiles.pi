@@ -25,7 +25,7 @@ setup_c74_repo() {
     if [ ! -d "rnbo.oscquery.runner" ]; then
         git clone https://github.com/Cycling74/rnbo.oscquery.runner.git
     fi
-    cd rnbo.oscquery.runner
+    cd rnbo.oscquery.runner/config
     pwd
 
     echo "${BLU}Adding Cycling '74 apt repository key and sources...${D}"
