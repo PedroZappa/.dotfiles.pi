@@ -214,7 +214,7 @@ if [[ "$input" =~ ^[Yy]$ ]]; then
         bash rnbo.oscquery.runner.sh
     fi
 else
-    echo "${YEL}Skipping RNBO installation.${D}"
+    echo "${MAG}Skipping RNBO installation.${D}"
 fi
 
 # **************************************************************************** #
