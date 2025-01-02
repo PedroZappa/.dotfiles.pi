@@ -79,8 +79,9 @@ install_zap() {
 # **************************************************************************** #
 
 # Define package categories in separate variables for better maintainability
-core_tools=("build-essential" "cmake" "g++" "make" "curl" "wget" "clang" "libssl-dev" "libboost-all-dev" "ninja-build" "googletest")
-additional_tools=("tmux" "vim" "gdb" "valgrind" "snapd" "luarocks" "btop" "lnav" "tree" "ripgrep" "ncdu" "fzf" "ranger" "nmon" "nmap")
+core_libs=("build-essential" "clang" "libclang-rt-16-dev" "g++" "libssl-dev" "libboost-all-dev" )
+core_tools=("vim" "tmux" "gdb" "valgrind" "make" "cmake" "curl" "wget" "ninja-build" "googletest")
+additional_tools=("snapd" "luarocks" "npm" "btop" "lnav" "tree" "ripgrep" "ncdu" "fzf" "ranger" "nmon" "nmap")
 snap_packages=("nvim --classic")
 
 # Function to install a single apt package
@@ -163,7 +164,13 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 read -p "${BYEL}Do you want to install ${BBLU}Packages? ${BWHI}[y/n]${D}: " input
 
 if [[ "$input" =~ ^[Yy]$ ]]; then
-	# Install the core tools
+	# Install core libs
+	echo -e "${BGRN}Installing Core Libs${D}"
+	for pkg in "${core_libs[@]}"; do
+			install_package "$pkg"
+	done
+
+	# Install core tools
 	echo -e "${BGRN}Installing Core Tools${D}"
 	for pkg in "${core_tools[@]}"; do
 			install_package "$pkg"
