@@ -1,0 +1,12 @@
+# specifies the default PCM (Pulse Code Modulation) audio device for playback, 
+# the default control interface for audio settings.
+pcm.!default { # Pulse Core Modulation)
+    type hw
+    card 3
+}
+
+ctl.!default { # (Control)
+    type hw
+    card 3
+}
+
