@@ -25,15 +25,12 @@ if [ -z "$TMUX" ]; then
   exit 1
 fi
 
-# Prepare to send stream.sdp to receiver
+# Transfer the SDP file in a new tmux pane
 tmux split-window -h '(zsh || bash && sleep 1)'
+tmux send-keys -t 2 "echo -e 'Transferring SDP file to $IP2SEND:$DEST_PATH...'" C-m
 tmux send-keys -t 2 "sleep 1 && scp stream.sdp $DEST_USER@$IP2SEND:$DEST_PATH" C-m
 
 # Generate the RTP stream and SDP file
 echo -e "${MAG}Generating RTP stream and SDP file...${D}" 
 ffmpeg -f alsa -ac $N_CH -ar $RATE -i $INTERFACE -acodec $CODEC \
     -f rtp rtp://$IP2SEND:$PORT -sdp_file stream.sdp
-
-# Transfer the SDP file in a new tmux pane
-tmux select-pane -t 2
-echo '${MAG}Transferring SDP file to $IP2SEND:$DEST_PATH...${D}'
