@@ -32,7 +32,7 @@ fi
 # Stream Settings
 N_CH=2 # Number of channels
 RATE=44100 # Bit Rate
-INTERFACE=default
+INTERFACE=plughw:CARD=sndrpihifiberry,DEV=0
 CODEC=pcm_s16le 
 
 # Build commanmd to generate the RTP stream and SDP file

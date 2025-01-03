@@ -2,12 +2,22 @@
 
 # specifies the default PCM (Pulse Code Modulation) audio device for playback, 
 # the default control interface for audio settings.
-pcm.!default { # Pulse Core Modulation)
-    type hw
-    card 3
-}
+# pcm.!default { # Pulse Core Modulation)
+#     type hw
+#     card 3
+# }
+#
+# ctl.!default { # (Control)
+#     type hw
+#     card 3
+# }
 
+pcm.!default { # Pulse Core Modulation)
+    type plug
+    slave.pcm "plughw:CARD=sndrpihifiberry,DEV=0"
+}
 ctl.!default { # (Control)
     type hw
-    card 3
+    card sndrpihifiberry
 }
+
