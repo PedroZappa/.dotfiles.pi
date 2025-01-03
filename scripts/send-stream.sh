@@ -16,16 +16,21 @@ PORT=3333 # Port to send audio stream
 # Stream Settings
 N_CH=2 # Number of channels
 RATE=44100 # Bit Rate
+INTERFACE=default
+CODEC=pcm_s16le 
 
+# Check if running inside tmux
+if [ -z "$TMUX" ]; then
+  echo -e "${RED}Error: This script must be run inside a tmux session.${D}"
+  exit 1
+fi
 
 # Generate the RTP stream and SDP file
-ffmpeg -f alsa -ac $N_CH -ar $RATE -i default -acodec pcm_s16le -f rtp rtp://$IP2SEND:$PORT -sdp_file stream.sdp
+echo -e "${MAG}Generating RTP stream and SDP file...${D}"
+ffmpeg -f alsa -ac $N_CH -ar $RATE -i $INTERFACE -acodec $CODEC \
+    -f rtp rtp://$IP2SEND:$PORT -sdp_file stream.sdp
 
-# Modify the SDP file to set `m=audio` with payload type 97
-sed -i 's/^m=audio [0-9]* RTP\/AVP [0-9]*/m=audio 3333 RTP\/AVP 97/' stream.sdp
+# Transfer the SDP file in a new tmux pane
+tmux split-window -v "echo -e '${MAG}Transferring SDP file to $IP2SEND:$DEST_PATH...${D}'${D}'"
+tmux send-keys      -t 1 'scp stream.sdp $DEST_USER@$IP2SEND:$DEST_PATH ' C-m
 
-# Transfer the SDP file to the Mac
-scp stream.sdp $DEST_USER@$IP2SEND:$DEST_PATH
-
-# Clean up
-echo -e "${GRN}SDP file has been sent to $IP2SEND:$DEST_PATH${D}"
