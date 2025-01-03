@@ -7,9 +7,9 @@
 # Load Colors
 source ~/.dotfiles/scripts/colors.sh
 
-# Set env
-export IP2SEND=192.168.1.169
-export DEST_USER=zedro
+# Set default env
+IP2SEND=192.168.1.169
+DEST_USER=zedro
 DEST_PATH="~/" # Destination path
 PORT=3333 # Port to send audio stream
 
@@ -24,6 +24,16 @@ if [ -z "$TMUX" ]; then
   echo "${RED}Error: This script must be run inside a tmux session.${D}"
   exit 1
 fi
+
+# Parse command-line arguments
+while getopts "u:i:p:" opt; do
+  case $opt in
+    u) DEST_USER=$OPTARG ;;  # Set destination user
+    i) IP2SEND=$OPTARG ;;    # Set IP address
+		p) PORT=$OPTARG ;;			 # Set port
+    *) echo "Usage: ${YEL}$0 [-u user] [-i IP] [-p port]${D}"; exit 1 ;;
+  esac
+done
 
 # Pass environment variables to tmux session
 tmux set-environment -g IP2SEND $IP2SEND
