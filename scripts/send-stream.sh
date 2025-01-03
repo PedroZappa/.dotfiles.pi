@@ -35,6 +35,7 @@ tmux set-environment -g RATE $RATE
 tmux set-environment -g INTERFACE $INTERFACE
 tmux set-environment -g CODEC $CODEC
 
+# ffmpeg -f alsa -ac 2 -ar 44100 -i default -acodec pcm_s16le -f rtp rtp://192.168.1.169:3333 -sdp_file stream.sdp
 cmd='ffmpeg -f alsa -ac $N_CH -ar $RATE -i $INTERFACE -acodec $CODEC \
 	-f rtp rtp://$IP2SEND:$PORT -sdp_file stream.sdp'
 
