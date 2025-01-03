@@ -35,15 +35,13 @@ RATE=44100 # Bit Rate
 INTERFACE=default
 CODEC=pcm_s16le 
 
+# Build commanmd to generate the RTP stream and SDP file
 cmd=$(cat << EOF
 	ffmpeg -f alsa -ac $N_CH -ar $RATE -i $INTERFACE -acodec $CODEC \
 		-f rtp rtp://$IP2SEND:$PORT -sdp_file stream.sdp
 EOF
 )
-
-# Generate the RTP stream and SDP file
 tmux set-option remain-on-exit on
-# tmux split-window -h ${cmd}
 tmux split-window -h "$cmd"
 
 # Transfer the SDP file in a new tmux pane
