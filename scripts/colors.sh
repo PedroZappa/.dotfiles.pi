@@ -3,39 +3,48 @@
 # Run the following command to get list of available colors
 # bash -c 'for c in {0..255}; do tput setaf $c; tput setaf $c | cat -v; echo =$c; done'
 
-# Dracula Color Scheme for Bash
-
 # Text attributes
-B="\033[1m"
-RESET="\033[0m"
-D="\033[0m"
+B=$(tput bold)
+RESET=$(tput sgr0)
+D=$RESET
 
-# Standard colors
-BLA="\033[38;2;40;42;54m"        # #282a36
-RED="\033[38;2;255;85;85m"         # #ff5555
-GRN="\033[38;2;80;250;123m"      # #50fa7b
-YEL="\033[38;2;241;250;140m"    # #f1fa8c
-BLU="\033[38;2;189;147;249m"      # #bd93f9
-MAG="\033[38;2;255;121;198m"   # #ff79c6
-CYA="\033[38;2;139;233;253m"      # #8be9fd
-WHI="\033[38;2;248;248;242m"     # #f8f8f2
-
-# Bright colors
-BBLA="\033[38;2;98;114;164m"   # #6272a4 (Comment)
-BRED="\033[38;2;255;110;110m"    # #ff6e6e (Unused in standard Dracula)
-BGRN="\033[38;2;106;255;173m"  # #6affad (Unused in standard Dracula)
-BYEL="\033[38;2;255;255;165m" # #ffffa5 (Unused in standard Dracula)
-BBLU="\033[38;2;173;149;255m"   # #ad95ff (Unused in standard Dracula)
-BMAG="\033[38;2;255;146;223m"# #ff92df (Unused in standard Dracula)
-BCYA="\033[38;2;164;255;255m"   # #a4ffff (Unused in standard Dracula)
-BWHI="\033[38;2;255;255;255m"  # #ffffff (Unused in standard Dracula)
+# Foreground colors
+BLA=$(tput setaf 0)     # Black
+RED=$(tput setaf 1)     # Red
+GRN=$(tput setaf 2)     # Green
+YEL=$(tput setaf 3)     # Yellow
+BLU=$(tput setaf 4)     # Blue
+MAG=$(tput setaf 5)     # Magenta
+CYA=$(tput setaf 6)     # Cyan
+WHI=$(tput setaf 7)     # White
+GRE=$(tput setaf 8)     # Gray
+PRP=$(tput setaf 99)    # Purple (256-color range)
+BRED=$(tput setaf 9)    # Bright Red
+BGRN=$(tput setaf 10)   # Bright Green
+BYEL=$(tput setaf 11)   # Bright Yellow
+BBLU=$(tput setaf 12)   # Bright Blue
+BMAG=$(tput setaf 13)   # Bright Magenta
+BCYA=$(tput setaf 14)   # Bright Cyan
+BWHI=$(tput setaf 15)   # Bright White
 
 # Background colors
-BGBLA="\033[48;2;40;42;54m"     # #282a36
-BGRED="\033[48;2;255;85;85m"      # #ff5555
-BGGRN="\033[48;2;80;250;123m"   # #50fa7b
-BGYEL="\033[48;2;241;250;140m" # #f1fa8c
-BGBLU="\033[48;2;189;147;249m"   # #bd93f9
-BGMAG="\033[48;2;255;121;198m"# #ff79c6
-BGCYA="\033[48;2;139;233;253m"   # #8be9fd
-BGWHI="\033[48;2;248;248;242m"  # #f8f8f2
+BGBLA=$(tput setab 0)   # Black Background
+BGRED=$(tput setab 1)   # Red Background
+BGGRN=$(tput setab 2)   # Green Background
+BGYEL=$(tput setab 3)   # Yellow Background
+BGBLU=$(tput setab 4)   # Blue Background
+BGMAG=$(tput setab 5)   # Magenta Background
+BGCYA=$(tput setab 6)   # Cyan Background
+BGWHI=$(tput setab 7)   # White Background
+BGGRE=$(tput setab 8)   # Gray Background
+BGPRP=$(tput setab 99)  # Purple Background (256-color range)
+BGRED2=$(tput setab 9)  # Bright Red Background
+BGGRN2=$(tput setab 10) # Bright Green Background
+BGYEL2=$(tput setab 11) # Bright Yellow Background
+BGBLU2=$(tput setab 12) # Bright Blue Background
+BGMAG2=$(tput setab 13) # Bright Magenta Background
+BGCYA2=$(tput setab 14) # Bright Cyan Background
+BGWHI2=$(tput setab 15) # Bright White Background
+
+# Bell character (useful for terminal alerts)
+BEL=$(tput bel)
