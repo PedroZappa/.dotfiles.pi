@@ -8,8 +8,8 @@
 source ~/.dotfiles/scripts/colors.sh
 
 # Set env
-IP2SEND=192.168.1.169
-DEST_USER=zedro
+export IP2SEND=192.168.1.169
+export DEST_USER=zedro
 DEST_PATH="~/" # Destination path
 PORT=3333 # Port to send audio stream
 
@@ -21,16 +21,19 @@ CODEC=pcm_s16le
 
 # Check if running inside tmux
 if [ -z "$TMUX" ]; then
-  echo -e "${RED}Error: This script must be run inside a tmux session.${D}"
+  echo "${RED}Error: This script must be run inside a tmux session.${D}"
   exit 1
 fi
 
+# Prepare to send stream.sdp to receiver
+tmux split-window -h '(zsh || bash && sleep 1)'
+tmux send-keys -t 2 "sleep 1 && scp stream.sdp $DEST_USER@$IP2SEND:$DEST_PATH" C-m
+
 # Generate the RTP stream and SDP file
-echo -e "${MAG}Generating RTP stream and SDP file...${D}"
+echo -e "${MAG}Generating RTP stream and SDP file...${D}" 
 ffmpeg -f alsa -ac $N_CH -ar $RATE -i $INTERFACE -acodec $CODEC \
     -f rtp rtp://$IP2SEND:$PORT -sdp_file stream.sdp
 
 # Transfer the SDP file in a new tmux pane
-tmux split-window -v "echo -e '${MAG}Transferring SDP file to $IP2SEND:$DEST_PATH...${D}'${D}'"
-tmux send-keys      -t 1 'scp stream.sdp $DEST_USER@$IP2SEND:$DEST_PATH ' C-m
-
+tmux select-pane -t 2
+echo '${MAG}Transferring SDP file to $IP2SEND:$DEST_PATH...${D}'
