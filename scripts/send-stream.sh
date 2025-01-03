@@ -13,12 +13,6 @@ DEST_USER=zedro				# User to send to
 DEST_PATH="~/"				# Destination path
 PORT=3333							# Port to send audio stream
 
-# Stream Settings
-N_CH=2 # Number of channels
-RATE=44100 # Bit Rate
-INTERFACE=default
-CODEC=pcm_s16le 
-
 # Parse command-line arguments
 while getopts "u:i:p:" opt; do
   case $opt in
@@ -35,19 +29,17 @@ if [ -z "$TMUX" ]; then
   exit 1
 fi
 
-# Pass environment variables to tmux session
-tmux set-environment -g IP2SEND $IP2SEND
-tmux set-environment -g DEST_USER $DEST_USER
-tmux set-environment -g DEST_PATH $DEST_PATH
-tmux set-environment -g PORT $PORT
-tmux set-environment -g N_CH $N_CH
-tmux set-environment -g RATE $RATE
-tmux set-environment -g INTERFACE $INTERFACE
-tmux set-environment -g CODEC $CODEC
+# Stream Settings
+N_CH=2 # Number of channels
+RATE=44100 # Bit Rate
+INTERFACE=default
+CODEC=pcm_s16le 
 
-# ffmpeg -f alsa -ac 2 -ar 44100 -i default -acodec pcm_s16le -f rtp rtp://192.168.1.169:3333 -sdp_file stream.sdp
-cmd='ffmpeg -f alsa -ac $N_CH -ar $RATE -i $INTERFACE -acodec $CODEC \
-	-f rtp rtp://$IP2SEND:$PORT -sdp_file stream.sdp'
+cmd=$(cat << EOF
+	ffmpeg -f alsa -ac $N_CH -ar $RATE -i $INTERFACE -acodec $CODEC \
+		-f rtp rtp://$IP2SEND:$PORT -sdp_file stream.sdp
+EOF
+)
 
 # Generate the RTP stream and SDP file
 tmux set-option remain-on-exit on
