@@ -129,8 +129,17 @@ install_package() {
 # Function to install a single snap package
 install_snap_package() {
     local pkg="$1"
-    echo -e "${GRN}Installing snap package: ${BGRN}$pkg${D}"
-    sudo snap install $pkg
+    echo -e "${BLU}Checking if snap package ${pkg} is installed...${D}"
+    # Check if the snap package is installed
+    if ! snap list | grep -q "^${pkg}\s"; then
+        echo -e "${BMAG}${pkg} is not installed. Installing now...${D}"
+        sudo snap install "$pkg" || {
+            echo -e "${RED}Failed to install snap package ${pkg}. Please check your snap configuration or network connection.${D}"
+            return 1
+        }
+    else
+        echo -e "${BYEL}${pkg} is already installed.${D}"
+    fi
 }
 
 # **************************************************************************** #
@@ -165,8 +174,6 @@ create_symlink() {
     else
         echo -e "${RED}Failed to create symlink from ${GRN}$SRC ${RED}to ${PRP}$DEST${D}" >&2
     fi
-    # ln -s "$SRC" "$DEST"
-    # echo -e "${YEL}Created symlink from ${GRN}$SRC ${YEL}to ${PRP}$DEST${D}"
 }
 #
 # **************************************************************************** #
