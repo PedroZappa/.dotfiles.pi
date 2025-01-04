@@ -217,6 +217,9 @@ fi
 
 # Create symlinks
 for SRC in "${!FILES[@]}"; do
+    if [ ! -d ~/.config ]; then
+        mkdir -p ~/.config
+    fi
     DEST=${FILES[$SRC]}
     create_symlink "$SRC" "$DEST"
 done
