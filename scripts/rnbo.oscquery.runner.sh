@@ -88,13 +88,28 @@ setup_rnbooscquery() {
     echo -e "${GRN}rnbooscquery setup complete.${D} 🖔"
 }
 
+# setup_52nvdac() {
+#     echo -e "${MAG}Setting up 52PI:NVDAC...${D}"
+#     # Remove the default dtparam=audio=on
+#     sudo sed -i '/^dtparam=audio=on$/d' /boot/firmware/config.txt
+#     # Insert dtoverlay=hifiberry-dacplus,slave after the line containing "# Enable audio"
+#     sudo sed -i '/# Enable audio/a dtoverlay=hifiberry-dacplus,slave' /boot/firmware/config.txt
+# }
 setup_52nvdac() {
     echo -e "${MAG}Setting up 52PI:NVDAC...${D}"
+
     # Remove the default dtparam=audio=on
     sudo sed -i '/^dtparam=audio=on$/d' /boot/firmware/config.txt
-    # Insert dtoverlay=hifiberry-dacplus,slave after the line containing "# Enable audio"
-    sudo sed -i '/# Enable audio/a dtoverlay=hifiberry-dacplus,slave' /boot/firmware/config.txt
+
+    # Check if the line already exists
+    if ! grep -q '^dtoverlay=hifiberry-dacplus,slave$' /boot/firmware/config.txt; then
+        # Insert dtoverlay=hifiberry-dacplus,slave after the line containing "# Enable audio"
+        sudo sed -i '/# Enable audio/a dtoverlay=hifiberry-dacplus,slave' /boot/firmware/config.txt
+    else
+        echo -e "${GRN}The line 'dtoverlay=hifiberry-dacplus,slave' already exists.${D}"
+    fi
 }
+
 
 # **************************************************************************** #
 # **************************************************************************** #
