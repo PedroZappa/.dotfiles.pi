@@ -109,7 +109,7 @@ install_snap_package() {
 # **************************************************************************** #
 # **************************************************************************** #
 
-DOTFILES_SSH_URL="git@github.com:PedroZappa/.dotfiles.min.git"
+DOTFILES_SSH_URL="git@github.com:PedroZappa/.dotfiles.pi.git"
 
 # Associative array defining source and target FILES
 declare -A FILES
