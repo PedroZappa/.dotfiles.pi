@@ -79,6 +79,7 @@ install_zap() {
             echo "${RED}Failed to install Zap. Please check your network connection and try again.${D}"
             return 1
         }
+        rm ~/.zshrc
         echo -e "${BGRN}Zap installation complete.${D}"
     fi
 }
@@ -190,6 +191,7 @@ if [[ "$input" =~ ^[Yy]$ ]]; then
 	done
 
 	# Install snap packages
+	echo -e "${BGRN}Installing Snap Packages${D}"
 	for pkg in "${snap_packages[@]}"; do
 			install_snap_package "$pkg"
 	done
@@ -201,7 +203,6 @@ if [[ "$input" =~ ^[Yy]$ ]]; then
 else
   echo -e "${MAG}Skipping RNBO installation.${D}"
 fi
-
 
 # Clone the dotfiles repository
 if [ ! -d "$HOME/.dotfiles" ]; then
