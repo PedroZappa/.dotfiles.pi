@@ -9,7 +9,16 @@
 # echo -e "Setup script started on $(date)" | tee -a setup.log
 
 # Load Colors
-source ~/.dotfiles/scripts/colors.sh
+# Load Colors
+if [ -d ~/.dotfiles ]; then
+    source ~/.dotfiles/scripts/colors.sh
+else
+    if [ ! -f ~/colors.sh ]; then
+        echo -e "${YEL}Colors script not found, downloading: ${D}"
+        wget https://raw.githubusercontent.com/PedroZappa/.dotfiles.min/refs/heads/main/scripts/colors.sh
+    fi
+    source ./colors.sh
+fi
 
 # Function to add the Cycling '74 apt repository, install packages, and setup
 setup_c74_repo() {
