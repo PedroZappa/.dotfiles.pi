@@ -134,8 +134,13 @@ create_symlink() {
     # Create the parent directory if it doesn't exist
     mkdir -p "$(dirname "$DEST")"
     # Create the symlink
-    ln -s "$SRC" "$DEST"
-    echo -e "${YEL}Created symlink from ${GRN}$SRC ${YEL}to ${PRP}$DEST${D}"
+    if ln -s "$SRC" "$DEST"; then
+        echo -e "${YEL}Created symlink from ${GRN}$SRC ${YEL}to ${PRP}$DEST${D}"
+    else
+        echo -e "${RED}Failed to create symlink from ${GRN}$SRC ${RED}to ${PRP}$DEST${D}" >&2
+    fi
+    # ln -s "$SRC" "$DEST"
+    # echo -e "${YEL}Created symlink from ${GRN}$SRC ${YEL}to ${PRP}$DEST${D}"
 }
 #
 # **************************************************************************** #
