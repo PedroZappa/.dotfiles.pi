@@ -9,7 +9,6 @@
 # echo -e "Setup script started on $(date)" | tee -a setup.log
 
 # Load Colors
-
 if [ -d ~/.dotfiles ]; then
     source ~/.dotfiles/scripts/colors.sh
 else
