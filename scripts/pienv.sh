@@ -84,6 +84,25 @@ install_zap() {
     fi
 }
 
+# Function to check if Starship is installed and install if necessary
+install_starship() {
+    local starship_install_cmd="curl -sS https://starship.rs/install.sh | sh"
+
+    echo -e "${BLU}Checking if Starship is installed...${D}"
+
+    # Check if Starship is installed by looking for its binary
+    if command -v starship >/dev/null 2>&1; then
+        echo -e "${BYEL}Starship is already installed.${D}"
+    else
+        echo -e "${BMAG}Starship is not installed. Installing now...${D}"
+        eval "$starship_install_cmd" || {
+            echo -e "${RED}Failed to install Starship. Please check your network connection and try again.${D}"
+            return 1
+        }
+        echo -e "${BGRN}Starship installation complete.${D}"
+    fi
+}
+
 # **************************************************************************** #
 # **************************************************************************** #
 
@@ -94,10 +113,23 @@ additional_tools=("snapd" "luarocks" "npm" "btop" "lnav" "tree" "ripgrep" "ncdu"
 snap_packages=("nvim --classic")
 
 # Function to install a single apt package
+# install_package() {
+#     local pkg="$1"
+#     echo -e "${GRN}Installing package: ${BGRN}$pkg${D}"
+#     sudo apt-get install -y "$pkg"
+# }
 install_package() {
-    local pkg="$1"
-    echo -e "${GRN}Installing package: ${BGRN}$pkg${D}"
-    sudo apt-get install -y "$pkg"
+    local pkg=$1
+    echo -e "${BLU}Checking if ${pkg} is installed...${D}"
+    if ! command -v "$pkg" >/dev/null 2>&1; then
+        echo -e "${BMAG}${pkg} is not installed. Installing now...${D}"
+        sudo apt-get update && sudo apt-get install -y "$pkg" || {
+            echo -e "${RED}Failed to install ${pkg}. Please check your package manager or network connection.${D}"
+            return 1
+        }
+    else
+        echo -e "${BYEL}${pkg} is already installed.${D}"
+    fi
 }
 
 # Function to install a single snap package
