@@ -110,7 +110,7 @@ setup_rnbooscquery
 setup_52nvdac
 
 # Ask user if they want to reboot now
-read -p "Do you want to reboot now? (y/n): " input
+read -p "${RED}Do you want to reboot now? (y/n): ${D}" input
 
 if [[ "$input" =~ ^[Yy]$ ]]; then
     echo -e "${YEL}Rebooting to apply changes...${D}"
