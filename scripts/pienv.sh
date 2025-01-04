@@ -249,7 +249,7 @@ fi
 if [ ! -d "$HOME/.dotfiles" ]; then
     # Clone the dotfiles repository
     echo -e "${BLU}Cloning dotfiles repository...${D}"
-    git clone $DOTFILES_SSH_URL ~/.dotfiles
+    git clone $DOTFILES_SSH_URL $HOME/.dotfiles
 fi
 
 # Create symlinks
