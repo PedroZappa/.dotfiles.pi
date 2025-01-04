@@ -83,7 +83,7 @@ install_zap() {
 # **************************************************************************** #
 
 # Define package categories in separate variables for better maintainability
-core_libs=("build-essential" "clang" "libclang-rt-16-dev" "llvm" "libllvm16" "g++" "libssl-dev" "libboost-all-dev" "liblo-tools" "alsa-utils" "librtmidi-dev" "bluez-tools")
+core_libs=("build-essential" "clang" "libclang-rt-16-dev" "llvm" "libllvm16" "g++" "libssl-dev" "libboost-all-dev" )
 core_tools=("vim" "tmux" "gdb" "valgrind" "make" "cmake" "curl" "wget" "ninja-build" "googletest")
 additional_tools=("snapd" "luarocks" "npm" "btop" "lnav" "tree" "ripgrep" "ncdu" "fzf" "ranger" "nmon" "nmap" "ffmpeg")
 snap_packages=("nvim --classic")
@@ -232,6 +232,11 @@ if [[ "$input" =~ ^[Yy]$ ]]; then
     fi
 else
     echo -e "${MAG}Skipping RNBO installation.${D}"
+fi
+
+# Remove the colors script
+if [ -f "~/colors.sh" ]; then
+    rm ~/colors.sh
 fi
 
 # **************************************************************************** #
