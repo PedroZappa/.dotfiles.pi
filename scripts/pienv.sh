@@ -177,6 +177,24 @@ create_symlink() {
 }
 
 # **************************************************************************** #
+# **************************************************************************** #
+
+# Install TPM (Tmux Plugin Manager)
+install_tpm() {
+    echo -e "${BBLU}Getting TPM (Tmux Plugin Manager)...${D}"
+    if [ -d ~/.tmux/plugins/tpm ]; then
+        echo -e "${BYEL}TPM is already installed at ~/.tmux/plugins/tpm.${D}"
+    else
+        echo -e "${BMAG}TPM is not installed. Cloning now...${D}"
+        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm || {
+            echo -e "${RED}Failed to clone TPM repository. Please check your internet connection or permissions.${D}"
+            exit 1
+        }
+        echo -e "${GRN}TPM has been successfully installed.${D}"
+    fi
+}
+
+# **************************************************************************** #
 #                                 GO BASH GO!                                  #
 # **************************************************************************** #
 
@@ -208,20 +226,9 @@ install_package "curl"
 echo -e "${BBLU}Getting Starship Prompt...${D}"
 curl -sS https://starship.rs/install.sh | sh
 
-echo -e "${BBLU}Getting TPM (Tmux Plugin Manager)...${D}"
-if [ -d ~/.tmux/plugins/tpm ]; then
-    echo -e "${BYEL}TPM is already installed at ~/.tmux/plugins/tpm.${D}"
-else
-    echo -e "${BMAG}TPM is not installed. Cloning now...${D}"
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm || {
-        echo -e "${RED}Failed to clone TPM repository. Please check your internet connection or permissions.${D}"
-        exit 1
-    }
-    echo -e "${GRN}TPM has been successfully installed.${D}"
-fi
+# Install TPM (Tmux Plugin Manager)
+install_tpm
 
-
-#
 read -p "${BYEL}Do you want to install ${BBLU}Packages? ${BWHI}[y/n]${D}: " input
 
 if [[ "$input" =~ ^[Yy]$ ]]; then
@@ -292,6 +299,11 @@ if [[ "$input" =~ ^[Yy]$ ]]; then
     fi
 else
     echo -e "${MAG}Skipping RNBO installation.${D}"
+fi
+
+# Remove the rnbo.oscquery.runner script
+if [ -f "~/rnbo.oscquery.runner.sh" ]; then
+    rm ~/rnbo.oscquery.runner.sh
 fi
 
 # Remove the colors script
