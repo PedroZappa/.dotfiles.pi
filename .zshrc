@@ -62,7 +62,8 @@ alias zmux=~/.dotfiles/scripts/tmux/zmux-init.sh
 alias xmux=~/.dotfiles/scripts/tmux/zmux-kill.sh
 
 # Audio
-alias sstream="~/.dotfiles/scripts/send-stream.sh"
+alias sstream="~/.dotfiles/scripts/audio/send-stream.sh"
+alias rstream="~/.dotfiles/scripts/audio/read-stream.sh"
 
 ##############################
 ### File System Navigation ###

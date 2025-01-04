@@ -9,6 +9,10 @@
 # echo -e "Setup script started on $(date)" | tee -a setup.log
 
 # Load Colors
+if [ ! -f ~/.dotfiles/scripts/colors.sh ]; then
+    echo -e "${YEL}Colors script not found, downloading: ${D}"
+    wget https://raw.githubusercontent.com/PedroZappa/.dotfiles.min/refs/heads/main/scripts/colors.sh
+fi
 source ~/.dotfiles/scripts/colors.sh
 
 # **************************************************************************** #
