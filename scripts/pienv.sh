@@ -40,7 +40,7 @@ display_and_confirm_ssh_key() {
 create_ssh_key() {
     local pub_key_file="$HOME/.ssh/id_rsa.pub"
 
-    if [ ! -d "$pub_key_file" ]; then
+    if [ ! -f "$pub_key_file" ]; then
         echo -e "${MAG}Creating SSH key pair...${D}"
         ssh-keygen
     else
