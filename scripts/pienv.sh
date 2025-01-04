@@ -166,6 +166,10 @@ fi
 install_package "git"
 install_zap
 
+install_package "curl"
+echo -e "${BBLU}Getting Starship Prompt...${D}"
+curl -sS https://starship.rs/install.sh | sh
+
 echo -e "${BBLU}Getting TPM (Tmux Plugin Manager)...${D}"
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
