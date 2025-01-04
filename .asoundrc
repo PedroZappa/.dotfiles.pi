@@ -12,12 +12,12 @@
 #     card 3
 # }
 
-pcm.!default { # Pulse Core Modulation)
-    type plug
-    slave.pcm "plughw:CARD=sndrpihifiberry,DEV=0"
-}
-ctl.!default { # (Control)
-    type hw
-    card sndrpihifiberry
-}
-
+# pcm.!default { # Pulse Core Modulation)
+#     type plug
+#     slave.pcm "plughw:CARD=sndrpihifiberry,DEV=0"
+# }
+# ctl.!default { # (Control)
+#     type hw
+#     card sndrpihifiberry
+# }
+#
