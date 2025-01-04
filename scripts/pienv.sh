@@ -112,18 +112,12 @@ core_tools=("vim" "tmux" "gdb" "valgrind" "make" "cmake" "curl" "wget" "ffmpeg" 
 additional_tools=("snapd" "luarocks" "npm" "btop" "lnav" "tree" "ripgrep" "ncdu" "fzf" "ranger" "nmon" "nmap")
 snap_packages=("nvim --classic")
 
-# Function to install a single apt package
-# install_package() {
-#     local pkg="$1"
-#     echo -e "${GRN}Installing package: ${BGRN}$pkg${D}"
-#     sudo apt-get install -y "$pkg"
-# }
 install_package() {
     local pkg=$1
     echo -e "${BLU}Checking if ${pkg} is installed...${D}"
     if ! command -v "$pkg" >/dev/null 2>&1; then
         echo -e "${BMAG}${pkg} is not installed. Installing now...${D}"
-        sudo apt-get update && sudo apt-get install -y "$pkg" || {
+        sudo apt-get install -y "$pkg" || {
             echo -e "${RED}Failed to install ${pkg}. Please check your package manager or network connection.${D}"
             return 1
         }
