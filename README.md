@@ -1,5 +1,7 @@
 # .dotfiles for Raspberry Pi 5
 
+> Tested w/ `Debian Bookworm : Raspberry Pi OS LITE (64-bit)` OS.
+
 ## Install on a fresh Raspberry Pi
 ```sh
 sudo apt insatall wget
