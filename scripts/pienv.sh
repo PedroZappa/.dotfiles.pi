@@ -115,30 +115,7 @@ snap_packages=("nvim --classic")
 install_package() {
     local pkg=$1
     echo -e "${BLU}Checking if ${pkg} is installed...${D}"
-    
-    # Check if package is installed via dpkg-query
-    if ! dpkg-query -W -f='${Status}' "$pkg" 2>/dev/null | grep -q "installed"; then
-        # As a fallback, check if it's a library by searching in system library paths
-        if ! ldconfig -p | grep -q "$pkg"; then
-            echo -e "${BMAG}${pkg} is not installed. Installing now...${D}"
-            sudo apt-get install -y "$pkg" || {
-                echo -e "${RED}Failed to install ${pkg}. Please check your package manager or network connection.${D}"
-                return 1
-            }
-        else
-            echo -e "${BYEL}Library ${pkg} seems to be present (found in ldconfig).${D}"
-        fi
-    else
-        echo -e "${BYEL}${pkg} is already installed.${D}"
-    fi
-}
-
-
-install_package() {
-    local pkg=$1
-    echo -e "${BLU}Checking if ${pkg} is installed...${D}"
-    
-    if ! dpkg-query -W -f='${Status}' "$pkg" 2>/dev/null | grep -q "installed"; then
+    if ! command -v "$pkg" >/dev/null 2>&1; then
         echo -e "${BMAG}${pkg} is not installed. Installing now...${D}"
         sudo apt-get install -y "$pkg" || {
             echo -e "${RED}Failed to install ${pkg}. Please check your package manager or network connection.${D}"
@@ -148,6 +125,21 @@ install_package() {
         echo -e "${BYEL}${pkg} is already installed.${D}"
     fi
 }
+#
+# install_package() {
+#     local pkg=$1
+#     echo -e "${BLU}Checking if ${pkg} is installed...${D}"
+#     
+#     if ! dpkg-query -W -f='${Status}' "$pkg" 2>/dev/null | grep -q "installed"; then
+#         echo -e "${BMAG}${pkg} is not installed. Installing now...${D}"
+#         sudo apt-get install -y "$pkg" || {
+#             echo -e "${RED}Failed to install ${pkg}. Please check your package manager or network connection.${D}"
+#             return 1
+#         }
+#     else
+#         echo -e "${BYEL}${pkg} is already installed.${D}"
+#     fi
+# }
 
 # Function to install a single snap package
 install_snap_package() {
