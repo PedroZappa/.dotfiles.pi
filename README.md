@@ -1,6 +1,6 @@
 # .dotfiles for Raspberry Pi 5
 
-> Tested w/ `2024-11-19 Raspberry Pi OS Bookworm ARM64`.
+> Tested w/ `2024-11-19 Raspberry Pi OS Bookworm ARMHF LITE`.
 
 ## Install on a fresh Raspberry Pi
 ```sh
