@@ -127,39 +127,20 @@ install_package() {
 }
 
 # Function to install a single snap package
-# install_snap_package() {
-#     local pkg="$1"
-#     echo -e "${BLU}Checking if snap package ${pkg} is installed...${D}"
-#     # Check if the snap package is installed
-#     if ! snap list | grep -q "^${pkg}\s"; then
-#         echo -e "${BMAG}${pkg} is not installed. Installing now...${D}"
-#         sudo snap install "$pkg" || {
-#             echo -e "${RED}Failed to install snap package ${pkg}. Please check your snap configuration or network connection.${D}"
-#             return 1
-#         }
-#     else
-#         echo -e "${BYEL}${pkg} is already installed.${D}"
-#     fi
-# }
 install_snap_package() {
     local pkg="$1"
     echo -e "${BLU}Checking if snap package ${pkg} is installed...${D}"
-    if ! snap list | grep -q "^${pkg}\s"; then
+    # Check if the snap package is installed
+    if ! command -v "$pkg" >/dev/null 2>&1; then
         echo -e "${BMAG}${pkg} is not installed. Installing now...${D}"
-        if ! sudo snap install "$pkg"; then
-            echo -e "${RED}Failed to install snap package ${pkg}.${D}"
-            echo "Snap status:"
-            snap version
-            echo "Recent snap changes:"
-            snap changes
-            echo "Please check your snap configuration or network connection."
+        sudo snap install "$pkg" || {
+            echo -e "${RED}Failed to install snap package ${pkg}. Please check your snap configuration or network connection.${D}"
             return 1
-        fi
+        }
     else
         echo -e "${BYEL}${pkg} is already installed.${D}"
     fi
 }
-
 
 # **************************************************************************** #
 # **************************************************************************** #
