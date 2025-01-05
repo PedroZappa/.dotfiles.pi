@@ -110,7 +110,7 @@ install_starship() {
 core_libs=("build-essential" "clang" "llvm" "g++" "libboost-all-dev" )
 core_tools=("vim" "tmux" "gdb" "valgrind" "make" "cmake" "curl" "wget" "ffmpeg" "ninja-build" "googletest")
 additional_tools=("snapd" "luarocks" "npm" "btop" "lnav" "tree" "ripgrep" "ncdu" "fzf" "ranger" "nmon" "nmap")
-snap_packages=("nvim --classic")
+snap_packages=("nvim:--classic")
 
 install_package() {
     local pkg=$1
@@ -275,9 +275,13 @@ if [[ "$input" =~ ^[Yy]$ ]]; then
 
 	# Install snap packages
 	echo -e "${BGRN}Installing Snap Packages${D}"
-	for pkg in "${snap_packages[@]}"; do
-			install_snap_package "$pkg"
-	done
+	# for pkg in "${snap_packages[@]}"; do
+	# 		install_snap_package "$pkg"
+	# done
+    for pkg in "${snap_packages[@]}"; do
+        IFS=':' read -r package options <<< "$pkg"
+        install_snap_package "$package" "$options"
+    done
 
 	# Clean up to save space
 	echo -e "${YEL}Cleaning up...${D}"
