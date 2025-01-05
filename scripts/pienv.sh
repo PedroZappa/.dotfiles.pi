@@ -125,37 +125,41 @@ install_package() {
         echo -e "${BYEL}${pkg} is already installed.${D}"
     fi
 }
-#
-# install_package() {
-#     local pkg=$1
-#     echo -e "${BLU}Checking if ${pkg} is installed...${D}"
-#     
-#     if ! dpkg-query -W -f='${Status}' "$pkg" 2>/dev/null | grep -q "installed"; then
+
+# Function to install a single snap package
+# install_snap_package() {
+#     local pkg="$1"
+#     echo -e "${BLU}Checking if snap package ${pkg} is installed...${D}"
+#     # Check if the snap package is installed
+#     if ! snap list | grep -q "^${pkg}\s"; then
 #         echo -e "${BMAG}${pkg} is not installed. Installing now...${D}"
-#         sudo apt-get install -y "$pkg" || {
-#             echo -e "${RED}Failed to install ${pkg}. Please check your package manager or network connection.${D}"
+#         sudo snap install "$pkg" || {
+#             echo -e "${RED}Failed to install snap package ${pkg}. Please check your snap configuration or network connection.${D}"
 #             return 1
 #         }
 #     else
 #         echo -e "${BYEL}${pkg} is already installed.${D}"
 #     fi
 # }
-
-# Function to install a single snap package
 install_snap_package() {
     local pkg="$1"
     echo -e "${BLU}Checking if snap package ${pkg} is installed...${D}"
-    # Check if the snap package is installed
     if ! snap list | grep -q "^${pkg}\s"; then
         echo -e "${BMAG}${pkg} is not installed. Installing now...${D}"
-        sudo snap install "$pkg" || {
-            echo -e "${RED}Failed to install snap package ${pkg}. Please check your snap configuration or network connection.${D}"
+        if ! sudo snap install "$pkg"; then
+            echo -e "${RED}Failed to install snap package ${pkg}.${D}"
+            echo "Snap status:"
+            snap version
+            echo "Recent snap changes:"
+            snap changes
+            echo "Please check your snap configuration or network connection."
             return 1
-        }
+        fi
     else
         echo -e "${BYEL}${pkg} is already installed.${D}"
     fi
 }
+
 
 # **************************************************************************** #
 # **************************************************************************** #
