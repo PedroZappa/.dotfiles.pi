@@ -26,34 +26,34 @@ fi
 # Defining Scripts and services
 
 SCRIPT=$(cat <<EOF
-		cd /sys/kernel/config/usb_gadget/
-		mkdir -p midi_over_usb
-		cd midi_over_usb
-		echo 0x1d6b > idVendor # Linux Foundation
-		echo 0x0104 > idProduct # Multifunction Composite Gadget
-		echo 0x0100 > bcdDevice # v1.0.0
-		echo 0x0200 > bcdUSB # USB2
-		mkdir -p strings/0x409
-		echo "fedcba9876543210" > strings/0x409/serialnumber
-		echo "Your Name" > strings/0x409/manufacturer
-		echo "MIDI USB Device" > strings/0x409/product
-		ls /sys/class/udc > UDC
+    cd /sys/kernel/config/usb_gadget/
+    mkdir -p midi_over_usb
+    cd midi_over_usb
+    echo 0x1d6b > idVendor # Linux Foundation
+    echo 0x0104 > idProduct # Multifunction Composite Gadget
+    echo 0x0100 > bcdDevice # v1.0.0
+    echo 0x0200 > bcdUSB # USB2
+    mkdir -p strings/0x409
+    echo "fedcba9876543210" > strings/0x409/serialnumber
+    echo "Your Name" > strings/0x409/manufacturer
+    echo "MIDI USB Device" > strings/0x409/product
+    ls /sys/class/udc > UDC
 EOF)
 
 ZMIDIFILTER_SERVICE=$(cat <<EOF
-		[Unit]
-		Description=Start zMidiFilter
-		After=audio.target
+    [Unit]
+    Description=Start zMidiFilter
+    After=audio.target
 
-		[Service]
-		ExecStart=/usr/bin/python3 /home/pi/zMIDIfilter/app.py
-		WorkingDirectory=/home/pi/zMIDIfilter/
-		Restart=always
-		User=pi
-		Group=pi
+    [Service]
+    ExecStart=/usr/bin/python3 /home/pi/zMIDIfilter/app.py
+    WorkingDirectory=/home/pi/zMIDIfilter/
+    Restart=always
+    User=pi
+    Group=pi
 
-		[Install]
-		WantedBy=audio.target
+    [Install]
+    WantedBy=audio.target
 EOF)
 
 # **************************************************************************** #
@@ -85,16 +85,17 @@ setupMIDI() {
     sudo chmod +x /usr/bin/midi_over_usb
     echo "$SCRIPT" | sudo tee /usr/bin/midi_over_usb
 
-		echo -e "${MAG}Creating Creating zmidfilter service...${D}"
-		sudo touch /etc/systemd/system/zmidifilter.service
-		sudo chmod +x /etc/systemd/system/zmidifilter.service
-		echo "$ZMIDIFILTER_SERVICE" | sudo tee /etc/systemd/system/zmidifilter.service
-		sudo systemctl daemon-reload
-		sudo systemctl enable zmidifilter.service
-		sudo systemctl start zmidifilter.service
-		sudo systemctl status zmidifilter.service
+    echo -e "${MAG}Creating Creating zmidfilter service...${D}"
+    git clone git@github.com:PedroZappa/zMIDIfilter.git
+    sudo touch /etc/systemd/system/zmidifilter.service
+    sudo chmod +x /etc/systemd/system/zmidifilter.service
+    echo "$ZMIDIFILTER_SERVICE" | sudo tee /etc/systemd/system/zmidifilter.service
+    sudo systemctl daemon-reload
+    sudo systemctl enable zmidifilter.service
+    sudo systemctl start zmidifilter.service
+    sudo systemctl status zmidifilter.service
 
-		echo -e "${GRN}MIDI Setup Done...${D}"
+    echo -e "${GRN}MIDI Setup Done...${D}"
 }
 
 # **************************************************************************** #
