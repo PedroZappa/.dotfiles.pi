@@ -107,7 +107,7 @@ install_starship() {
 # **************************************************************************** #
 
 # Define package categories in separate variables for better maintainability
-core_libs=("build-essential" "clang" "llvm" "g++" "libboost-all-dev" )
+core_libs=("build-essential" "clang" "llvm" "g++" "libboost-all-dev" "libjack-jackd2-dev")
 core_tools=("vim" "tmux" "gdb" "valgrind" "make" "cmake" "curl" "wget" "ffmpeg" "ninja-build" "googletest")
 additional_tools=("snapd" "luarocks" "npm" "btop" "lnav" "tree" "ripgrep" "ncdu" "fzf" "ranger" "nmon" "nmap")
 snap_packages=("nvim:--classic")
