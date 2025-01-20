@@ -4,12 +4,12 @@
 # the default control interface for audio settings.
 # pcm.!default { # Pulse Core Modulation)
 #     type hw
-#     card 3
+#     card 5
 # }
 #
 # ctl.!default { # (Control)
 #     type hw
-#     card 3
+#     card 5
 # }
 
 # pcm.!default { # Pulse Core Modulation)
