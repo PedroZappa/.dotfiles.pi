@@ -7,7 +7,7 @@ format = '''
 $virtualenv$directory$git_branch$git_commit$git_status$c$cmd_duration$python$shlvl
 $jobs$hostname$username $shell $character
 '''
-right_format = "$status${custom.minitalk}${custom.valgrind}$localip$time $battery$os"
+right_format = "$status${custom.minitalk}${custom.valgrind}${custom.hostname}$localip$time $battery$os"
 
 continuation_prompt = '▶▶ '
 # Don't print a new line at the start of the prompt
@@ -319,6 +319,12 @@ symbol = "󱗀"
 [kubernetes]
 symbol = "⛵ "
 style = "bold dimmed green"
+disabled = false
+
+[custom.hostname]
+when = true
+command = "hostname -s | awk '{ print $0 \".local\" }'"
+format = "[$output](bold blue) "
 disabled = false
 
 # [custom.minitalk]
